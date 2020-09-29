@@ -37,16 +37,6 @@ namespace apCaminhosMarte
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lsbOrigem_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void lsbOrigem_DrawItem(object sender, DrawItemEventArgs e)
         {
             if(e.Index < 0) return;
