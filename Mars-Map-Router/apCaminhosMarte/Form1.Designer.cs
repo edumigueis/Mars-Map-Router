@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpRotas = new System.Windows.Forms.TabPage();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -61,10 +63,8 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
-            this.pbMapa = new System.Windows.Forms.PictureBox();
             this.tpArvore = new System.Windows.Forms.TabPage();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
+            this.pbMapa = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tpRotas.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -81,7 +81,6 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Right;
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -93,7 +92,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1773, 686);
+            this.tabControl1.Size = new System.Drawing.Size(1677, 680);
             this.tabControl1.TabIndex = 0;
             // 
             // tpRotas
@@ -103,13 +102,31 @@
             this.tpRotas.Controls.Add(this.panel9);
             this.tpRotas.Controls.Add(this.panel8);
             this.tpRotas.Controls.Add(this.panel1);
-            this.tpRotas.Location = new System.Drawing.Point(4, 4);
+            this.tpRotas.Location = new System.Drawing.Point(4, 26);
             this.tpRotas.Margin = new System.Windows.Forms.Padding(4);
             this.tpRotas.Name = "tpRotas";
             this.tpRotas.Padding = new System.Windows.Forms.Padding(4);
-            this.tpRotas.Size = new System.Drawing.Size(1742, 678);
+            this.tpRotas.Size = new System.Drawing.Size(1669, 650);
             this.tpRotas.TabIndex = 0;
             this.tpRotas.Text = "Rotas entre cidades";
+            // 
+            // panel9
+            // 
+            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel9.Location = new System.Drawing.Point(407, 317);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(1235, 336);
+            this.panel9.TabIndex = 14;
+            // 
+            // panel8
+            // 
+            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel8.Location = new System.Drawing.Point(407, -4);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(1226, 349);
+            this.panel8.TabIndex = 13;
             // 
             // panel1
             // 
@@ -121,11 +138,12 @@
             this.panel1.Controls.Add(this.dataGridView2);
             this.panel1.Controls.Add(this.dataGridView1);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(-4, 0);
+            this.panel1.Location = new System.Drawing.Point(-4, -4);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(412, 682);
+            this.panel1.Size = new System.Drawing.Size(412, 658);
             this.panel1.TabIndex = 12;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel7
             // 
@@ -151,7 +169,7 @@
             this.panel2.Location = new System.Drawing.Point(-4, -4);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(416, 249);
+            this.panel2.Size = new System.Drawing.Size(407, 249);
             this.panel2.TabIndex = 14;
             // 
             // panel5
@@ -267,7 +285,7 @@
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscar.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(257, 186);
+            this.btnBuscar.Location = new System.Drawing.Point(248, 186);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(119, 37);
@@ -304,7 +322,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 31);
+            this.label1.Location = new System.Drawing.Point(30, 31);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 17);
@@ -346,7 +364,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.Size = new System.Drawing.Size(361, 87);
+            this.dataGridView2.Size = new System.Drawing.Size(343, 87);
             this.dataGridView2.TabIndex = 10;
             // 
             // dataGridViewTextBoxColumn1
@@ -412,12 +430,12 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            this.dataGridView1.Location = new System.Drawing.Point(23, 427);
+            this.dataGridView1.Location = new System.Drawing.Point(24, 427);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(361, 241);
+            this.dataGridView1.Size = new System.Drawing.Size(342, 217);
             this.dataGridView1.TabIndex = 9;
             // 
             // Column1
@@ -475,69 +493,54 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(19, 404);
+            this.label3.Location = new System.Drawing.Point(20, 402);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 19);
             this.label3.TabIndex = 5;
             this.label3.Text = "All paths";
             // 
+            // tpArvore
+            // 
+            this.tpArvore.Location = new System.Drawing.Point(4, 26);
+            this.tpArvore.Margin = new System.Windows.Forms.Padding(4);
+            this.tpArvore.Name = "tpArvore";
+            this.tpArvore.Padding = new System.Windows.Forms.Padding(4);
+            this.tpArvore.Size = new System.Drawing.Size(1706, 650);
+            this.tpArvore.TabIndex = 1;
+            this.tpArvore.Text = "Árvore de Cidades";
+            this.tpArvore.UseVisualStyleBackColor = true;
+            // 
             // pbMapa
             // 
             this.pbMapa.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMapa.BackColor = System.Drawing.Color.Transparent;
+            this.pbMapa.BackColor = System.Drawing.Color.Maroon;
             this.pbMapa.Image = ((System.Drawing.Image)(resources.GetObject("pbMapa.Image")));
-            this.pbMapa.Location = new System.Drawing.Point(407, -1);
+            this.pbMapa.Location = new System.Drawing.Point(388, -4);
             this.pbMapa.Margin = new System.Windows.Forms.Padding(4);
             this.pbMapa.Name = "pbMapa";
-            this.pbMapa.Size = new System.Drawing.Size(1339, 682);
-            this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbMapa.Size = new System.Drawing.Size(1285, 657);
+            this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbMapa.TabIndex = 0;
             this.pbMapa.TabStop = false;
             this.pbMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMapa_Paint);
-            // 
-            // tpArvore
-            // 
-            this.tpArvore.Location = new System.Drawing.Point(4, 4);
-            this.tpArvore.Margin = new System.Windows.Forms.Padding(4);
-            this.tpArvore.Name = "tpArvore";
-            this.tpArvore.Padding = new System.Windows.Forms.Padding(4);
-            this.tpArvore.Size = new System.Drawing.Size(1742, 678);
-            this.tpArvore.TabIndex = 1;
-            this.tpArvore.Text = "Árvore de Cidades";
-            this.tpArvore.UseVisualStyleBackColor = true;
-            // 
-            // panel8
-            // 
-            this.panel8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel8.Location = new System.Drawing.Point(407, -4);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1335, 349);
-            this.panel8.TabIndex = 13;
-            // 
-            // panel9
-            // 
-            this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel9.Location = new System.Drawing.Point(407, 345);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1336, 336);
-            this.panel9.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1772, 682);
+            this.ClientSize = new System.Drawing.Size(1676, 679);
             this.Controls.Add(this.tabControl1);
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mars Maps";
+            this.TransparencyKey = System.Drawing.Color.LightGray;
             this.tabControl1.ResumeLayout(false);
             this.tpRotas.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -565,7 +568,6 @@
         private System.Windows.Forms.ListBox lsbDestino;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lsbOrigem;
-        private System.Windows.Forms.PictureBox pbMapa;
         private System.Windows.Forms.TabPage tpArvore;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -594,6 +596,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.PictureBox pbMapa;
     }
 }
 

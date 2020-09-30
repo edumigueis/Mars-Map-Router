@@ -16,13 +16,13 @@ namespace apCaminhosMarte
         public Form1()
         {
             InitializeComponent();
-            tpRotas.BackColor = Color.FromArgb(255, 243, 243, 243);
             panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
             btnBuscar.BackColor = Color.FromArgb(255, 60, 80, 185);
             dataGridView1.RowHeadersVisible = false;
             dataGridView2.RowHeadersVisible = false;
+            pbMapa.BackColor = Color.FromArgb(92, 213, 189);
         }
 
         private void TxtCaminhos_DoubleClick(object sender, EventArgs e)
@@ -105,7 +105,7 @@ namespace apCaminhosMarte
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
-            {
+            /*{
                 Point startPoint = new Point(0, 0);
                 Point endPoint = new Point(pbMapa.Width, pbMapa.Height / 2);
                 LinearGradientBrush lgb = new LinearGradientBrush(startPoint, endPoint, Color.FromArgb(92, 213, 189), Color.FromArgb(92, 213, 189));
@@ -118,9 +118,13 @@ namespace apCaminhosMarte
                 LinearGradientBrush lgb = new LinearGradientBrush(startPoint, endPoint, Color.FromArgb(191, 171, 100), Color.FromArgb(191, 171, 100));
                 Graphics g = e.Graphics;
                 g.FillRectangle(lgb, 0, pbMapa.Height / 2, pbMapa.Width, pbMapa.Height);
-            }
+            }*/
+       
+        }
 
-            pbMapa.i
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
