@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,18 @@ namespace apCaminhosMarte
         public Form1()
         {
             InitializeComponent();
+            tpRotas.BackColor = Color.FromArgb(255, 243, 243, 243);
+            panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
+            lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
+            lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
+            btnBuscar.BackColor = Color.FromArgb(255, 60, 80, 185);
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView2.RowHeadersVisible = false;
         }
 
         private void TxtCaminhos_DoubleClick(object sender, EventArgs e)
         {
-           
+
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
@@ -39,7 +47,7 @@ namespace apCaminhosMarte
 
         private void lsbOrigem_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if(e.Index < 0) return;
+            if (e.Index < 0) return;
             //if the item state is selected them change the back color 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
@@ -70,7 +78,8 @@ namespace apCaminhosMarte
         {
             if (e.Index < 0) return;
             //if the item state is selected them change the back color 
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected) { 
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
                 e = new DrawItemEventArgs(e.Graphics,
                                           e.Font,
                                           e.Bounds,
@@ -78,20 +87,40 @@ namespace apCaminhosMarte
                                           e.State ^ DrawItemState.Selected,
                                           e.ForeColor,
                                           Color.FromArgb(229, 237, 250)); //Choose the color
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-            // Draw the current item text
-            e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
-        }
-        else
-        {
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-            e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.WhiteSmoke, e.Bounds, StringFormat.GenericDefault);
-        }
+                                                                          // Draw the background of the ListBox control for each item.
+                e.DrawBackground();
+                // Draw the current item text
+                e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            }
+            else
+            {
+                // Draw the background of the ListBox control for each item.
+                e.DrawBackground();
+                e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.WhiteSmoke, e.Bounds, StringFormat.GenericDefault);
+            }
 
             // If the ListBox has focus, draw a focus rectangle around the selected item.
             e.DrawFocusRectangle();
+        }
+
+        private void pbMapa_Paint(object sender, PaintEventArgs e)
+        {
+            {
+                Point startPoint = new Point(0, 0);
+                Point endPoint = new Point(pbMapa.Width, pbMapa.Height / 2);
+                LinearGradientBrush lgb = new LinearGradientBrush(startPoint, endPoint, Color.FromArgb(92, 213, 189), Color.FromArgb(92, 213, 189));
+                Graphics g = e.Graphics;
+                g.FillRectangle(lgb, 0, 0, pbMapa.Width, pbMapa.Height / 2);
+            }
+            {
+                Point startPoint = new Point(0, pbMapa.Height / 2);
+                Point endPoint = new Point(pbMapa.Width, pbMapa.Height);
+                LinearGradientBrush lgb = new LinearGradientBrush(startPoint, endPoint, Color.FromArgb(191, 171, 100), Color.FromArgb(191, 171, 100));
+                Graphics g = e.Graphics;
+                g.FillRectangle(lgb, 0, pbMapa.Height / 2, pbMapa.Width, pbMapa.Height);
+            }
+
+            pbMapa.i
         }
     }
 }
