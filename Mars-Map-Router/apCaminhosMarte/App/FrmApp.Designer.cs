@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmApp));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpRotas = new System.Windows.Forms.TabPage();
             this.pbMapa = new System.Windows.Forms.PictureBox();
@@ -103,7 +103,7 @@
             this.pbMapa.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pbMapa.Image = ((System.Drawing.Image)(resources.GetObject("pbMapa.Image")));
             this.pbMapa.Location = new System.Drawing.Point(399, -4);
-            this.pbMapa.Margin = new System.Windows.Forms.Padding(4);
+            this.pbMapa.Margin = new System.Windows.Forms.Padding(4, 8, 4, 4);
             this.pbMapa.Name = "pbMapa";
             this.pbMapa.Size = new System.Drawing.Size(1406, 700);
             this.pbMapa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -139,7 +139,7 @@
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(-4, -4);
+            this.panel2.Location = new System.Drawing.Point(-4, 3);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(407, 249);
@@ -149,17 +149,17 @@
             // 
             this.panel5.Controls.Add(this.panel6);
             this.panel5.Controls.Add(this.lsbDestino);
-            this.panel5.Location = new System.Drawing.Point(78, 97);
+            this.panel5.Location = new System.Drawing.Point(78, 96);
             this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(292, 56);
+            this.panel5.Size = new System.Drawing.Size(292, 68);
             this.panel5.TabIndex = 16;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Control;
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 54);
+            this.panel6.Location = new System.Drawing.Point(0, 66);
             this.panel6.Margin = new System.Windows.Forms.Padding(4);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(292, 2);
@@ -175,7 +175,7 @@
             this.lsbDestino.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lsbDestino.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.lsbDestino.FormattingEnabled = true;
-            this.lsbDestino.ItemHeight = 16;
+            this.lsbDestino.ItemHeight = 18;
             this.lsbDestino.Items.AddRange(new object[] {
             "  0 - Acheron          ",
             "  1 - Arena           ",
@@ -184,10 +184,10 @@
             "  4 - Bradbury ",
             "  5 - Burroughs       ",
             "  6 - Cairo            "});
-            this.lsbDestino.Location = new System.Drawing.Point(5, 6);
+            this.lsbDestino.Location = new System.Drawing.Point(5, 12);
             this.lsbDestino.Margin = new System.Windows.Forms.Padding(4);
             this.lsbDestino.Name = "lsbDestino";
-            this.lsbDestino.Size = new System.Drawing.Size(287, 48);
+            this.lsbDestino.Size = new System.Drawing.Size(287, 54);
             this.lsbDestino.TabIndex = 3;
             this.lsbDestino.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lsbDestino_DrawItem);
             // 
@@ -195,7 +195,7 @@
             // 
             this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.lsbOrigem);
-            this.panel3.Location = new System.Drawing.Point(78, 16);
+            this.panel3.Location = new System.Drawing.Point(78, 20);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(292, 61);
@@ -221,7 +221,7 @@
             this.lsbOrigem.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lsbOrigem.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.lsbOrigem.FormattingEnabled = true;
-            this.lsbOrigem.ItemHeight = 16;
+            this.lsbOrigem.ItemHeight = 18;
             this.lsbOrigem.Items.AddRange(new object[] {
             "  0 - Acheron          ",
             "  1 - Arena           ",
@@ -230,10 +230,10 @@
             "  4 - Bradbury ",
             "  5 - Burroughs       ",
             "  6 - Cairo            "});
-            this.lsbOrigem.Location = new System.Drawing.Point(4, 13);
-            this.lsbOrigem.Margin = new System.Windows.Forms.Padding(4);
+            this.lsbOrigem.Location = new System.Drawing.Point(4, 6);
+            this.lsbOrigem.Margin = new System.Windows.Forms.Padding(4, 8, 4, 4);
             this.lsbOrigem.Name = "lsbOrigem";
-            this.lsbOrigem.Size = new System.Drawing.Size(288, 48);
+            this.lsbOrigem.Size = new System.Drawing.Size(288, 54);
             this.lsbOrigem.TabIndex = 1;
             this.lsbOrigem.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lsbOrigem_DrawItem);
             // 
@@ -259,10 +259,10 @@
             this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBuscar.Font = new System.Drawing.Font("Poppins Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.White;
-            this.btnBuscar.Location = new System.Drawing.Point(248, 181);
+            this.btnBuscar.Location = new System.Drawing.Point(250, 188);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(119, 45);
+            this.btnBuscar.Size = new System.Drawing.Size(119, 42);
             this.btnBuscar.TabIndex = 11;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
@@ -330,14 +330,14 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.ColumnHeadersVisible = false;
             this.dataGridView2.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Poppins Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Poppins Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle31;
             this.dataGridView2.Location = new System.Drawing.Point(23, 296);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView2.MultiSelect = false;
@@ -361,14 +361,14 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ColumnHeadersVisible = false;
             this.dataGridView1.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Poppins Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Poppins Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle32;
             this.dataGridView1.Location = new System.Drawing.Point(24, 399);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.MultiSelect = false;
