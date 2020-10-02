@@ -11,11 +11,13 @@ using System.Windows.Forms;
 
 namespace apCaminhosMarte
 {
-    public partial class Form1 : Form
+    public partial class FrmApp : Form
     {
-        public Form1()
+        public FrmApp()
         {
             InitializeComponent();
+            Width = 1370;
+            Height = 620;
             panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
@@ -23,6 +25,43 @@ namespace apCaminhosMarte
             dataGridView1.RowHeadersVisible = false;
             dataGridView2.RowHeadersVisible = false;
             pbMapa.BackColor = Color.FromArgb(92, 213, 189);
+            dataGridView2.Columns.Add("a", "a");
+            dataGridView2.Columns.Add("b", "b");
+            dataGridView2.Columns.Add("c", "c");
+            dataGridView2.Columns.Add("d", "d");
+            dataGridView2.Rows.Add();
+            dataGridView2.Rows[0].Cells[0].Value = "Tharsis  ->";
+            dataGridView2.Rows[0].Cells[1].Value = "Portholee  ->";
+            dataGridView2.Rows[0].Cells[2].Value = "Redsea  ->";
+            dataGridView2.Rows[0].Cells[3].Value = "Bothadge";
+            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            {
+                column.Width = 120;
+            }
+
+            dataGridView1.Columns.Add("a", "a");
+            dataGridView1.Columns.Add("b", "b");
+            dataGridView1.Columns.Add("c", "c");
+            dataGridView1.Columns.Add("d", "d");
+            dataGridView1.Rows.Add();
+            dataGridView1.Rows[0].Cells[0].Value = "Tharsis  ->";
+            dataGridView1.Rows[0].Cells[1].Value = "Portholee  ->";
+            dataGridView1.Rows[0].Cells[2].Value = "Redsea  ->";
+            dataGridView1.Rows[0].Cells[3].Value = "Bothadge";
+            dataGridView1.Rows.Add();
+            dataGridView1.Rows[1].Cells[0].Value = "Tharsis  ->";
+            dataGridView1.Rows[1].Cells[1].Value = "Portholee  ->";
+            dataGridView1.Rows[1].Cells[2].Value = "Redsea  ->";
+            dataGridView1.Rows[1].Cells[3].Value = "Bothadge";
+            dataGridView1.Rows.Add();
+            dataGridView1.Rows[2].Cells[0].Value = "Tharsis  ->";
+            dataGridView1.Rows[2].Cells[1].Value = "Portholee  ->";
+            dataGridView1.Rows[2].Cells[2].Value = "Redsea  ->";
+            dataGridView1.Rows[2].Cells[3].Value = "Bothadge";
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.Width = 120;
+            }
         }
 
         private void TxtCaminhos_DoubleClick(object sender, EventArgs e)
@@ -119,7 +158,7 @@ namespace apCaminhosMarte
                 Graphics g = e.Graphics;
                 g.FillRectangle(lgb, 0, pbMapa.Height / 2, pbMapa.Width, pbMapa.Height);
             }*/
-       
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
