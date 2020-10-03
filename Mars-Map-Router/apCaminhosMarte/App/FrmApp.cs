@@ -9,8 +9,8 @@ namespace apCaminhosMarte
         public FrmApp()
         {
             InitializeComponent();
-            Width = 1770;
-            Height = 777;
+            /*Width = 1770;
+            Height = 777;*/
             panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
             lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
