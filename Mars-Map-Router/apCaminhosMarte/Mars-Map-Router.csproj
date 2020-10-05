@@ -59,6 +59,7 @@
       <DependentUpon>FrmInit.cs</DependentUpon>
     </Compile>
     <Compile Include="App\Program.cs" />
+    <Compile Include="Data\ArvoreBinaria.cs" />
     <Compile Include="Data\Cidade.cs" />
     <Compile Include="Data\LeitorDeArquivo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
