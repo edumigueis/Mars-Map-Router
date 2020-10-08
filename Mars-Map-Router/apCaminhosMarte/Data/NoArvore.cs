@@ -5,7 +5,7 @@ namespace apCaminhosMarte.Data
     {
         public T Info { get; set; }
         public NoArvore<T> Esq { get; set; }
-        public NoArvore<T> Dir { get; set; }
+        public NoArvore<T> Dir { get; set; } 
 
         public NoArvore(T info)
         {
