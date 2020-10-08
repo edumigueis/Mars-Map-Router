@@ -62,6 +62,7 @@
     <Compile Include="Data\ArvoreBinaria.cs" />
     <Compile Include="Data\Cidade.cs" />
     <Compile Include="Data\LeitorDeArquivo.cs" />
+    <Compile Include="Data\NoArvore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\FrmApp.resx">
       <DependentUpon>FrmApp.cs</DependentUpon>
