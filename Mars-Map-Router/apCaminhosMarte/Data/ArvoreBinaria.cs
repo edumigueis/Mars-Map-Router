@@ -7,9 +7,7 @@ namespace apCaminhosMarte.Data
         protected NoArvore<T> raiz;
 
         public ArvoreBinaria()
-        {
-
-        }
+        {}
 
         public void Incluir(T info)
         {
@@ -23,7 +21,8 @@ namespace apCaminhosMarte.Data
         {
             int comp = info.CompareTo(atual.Info);
 
-            if (comp == 0) throw new Exception("Item já existente!");
+            if (comp == 0) 
+                throw new Exception("Item já existente!");
 
             if (comp < 0)
             {
@@ -32,7 +31,7 @@ namespace apCaminhosMarte.Data
                 else
                     incluirRec(atual.Esq, info);
             }
-            else // comp > 0
+            else 
             {
                 if (atual.Dir == null)
                     atual.Dir = new NoArvore<T>(info);
@@ -41,7 +40,7 @@ namespace apCaminhosMarte.Data
             }
         }
 
-        public T BuscaT(T buscado)
+        public T Busca(T buscado)
         {
             return achar(buscado, this.raiz);
         }

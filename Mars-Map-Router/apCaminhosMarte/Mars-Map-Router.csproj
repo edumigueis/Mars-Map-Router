@@ -60,6 +60,8 @@
     </Compile>
     <Compile Include="App\Program.cs" />
     <Compile Include="Data\ArvoreBinaria.cs" />
+    <Compile Include="Data\AvancoCaminho.cs" />
+    <Compile Include="Data\CaminhoEntreCidades.cs" />
     <Compile Include="Data\Cidade.cs" />
     <Compile Include="Data\LeitorDeArquivo.cs" />
     <Compile Include="Data\NoArvore.cs" />

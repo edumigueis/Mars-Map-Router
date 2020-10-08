@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace apCaminhosMarte.Data
+﻿namespace apCaminhosMarte.Data
 {
     class CaminhoEntreCidades
     {
-        int dist, tmp, custo;
+        public int Distancia { get; set; }
+        public int Tempo { get; set; }
+        public int Custo { get; set; }
 
         public CaminhoEntreCidades(int distancia, int tempo, int custo)
         {
-            this.dist = distancia;
-            this.tmp = tempo;
-            this.custo = custo;
+            this.Distancia = distancia;
+            this.Tempo = tempo;
+            this.Custo = custo;
         }
 
-        public int Distancia { get => dist; set => dist = value; }
-        public int Tempo { get => tmp; set => tmp = value; }
-        public int Custo { get => custo; set => custo = value; }
+        public override bool Equals(object obj)
+        {
+            return obj is CaminhoEntreCidades cidades &&
+                   Distancia == cidades.Distancia &&
+                   Tempo == cidades.Tempo &&
+                   Custo == cidades.Custo;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 522326332;
+            hashCode = hashCode * -1521134295 + Distancia.GetHashCode();
+            hashCode = hashCode * -1521134295 + Tempo.GetHashCode();
+            hashCode = hashCode * -1521134295 + Custo.GetHashCode();
+            return hashCode;
+        }
     }
 }

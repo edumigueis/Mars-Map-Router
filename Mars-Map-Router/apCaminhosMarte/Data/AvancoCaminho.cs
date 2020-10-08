@@ -1,27 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace apCaminhosMarte.Data
 {
     class AvancoCaminho : ICloneable
     {
-        Cidade origem, destino;
-        CaminhoEntreCidades caminho;
+        public Cidade Origem { get; set; }
+        public Cidade Destino { get; set; }
+        public CaminhoEntreCidades Caminho { get; set; }
 
-        public AvancoCaminho(Cidade origem, Cidade destino, CaminhoEntreCidades cm)
+        public AvancoCaminho(Cidade origem, Cidade destino, CaminhoEntreCidades caminho)
         {
-            this.origem = origem;
-            this.destino = destino;
-            this.caminho = cm;
+            this.Origem = origem;
+            this.Destino = destino;
+            this.Caminho = caminho;
         }
-
-        public Cidade Origem { get => origem; set => origem = value; }
-        public Cidade Destino { get => destino; set => destino = value; }
-        public CaminhoEntreCidades Caminho { get => caminho; set => caminho = value; }
 
         public object Clone()
         {
-            AvancoCaminho av = new AvancoCaminho(this.origem, this.destino, this.caminho);
+            AvancoCaminho av = new AvancoCaminho(this.Origem, this.Destino, this.Caminho);
             return av;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AvancoCaminho caminho &&
+                   EqualityComparer<Cidade>.Default.Equals(Origem, caminho.Origem) &&
+                   EqualityComparer<Cidade>.Default.Equals(Destino, caminho.Destino) &&
+                   EqualityComparer<CaminhoEntreCidades>.Default.Equals(Caminho, caminho.Caminho);
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 2106482187;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Cidade>.Default.GetHashCode(Origem);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Cidade>.Default.GetHashCode(Destino);
+            hashCode = hashCode * -1521134295 + EqualityComparer<CaminhoEntreCidades>.Default.GetHashCode(Caminho);
+            return hashCode;
         }
     }
 }
