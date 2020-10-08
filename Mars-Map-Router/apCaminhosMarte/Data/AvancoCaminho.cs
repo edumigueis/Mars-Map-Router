@@ -14,9 +14,9 @@ namespace apCaminhosMarte.Data
             this.caminho = cm;
         }
 
-        internal Cidade Origem { get => origem; set => origem = value; }
-        internal Cidade Destino { get => destino; set => destino = value; }
-        internal CaminhoEntreCidades Caminho { get => caminho; set => caminho = value; }
+        public Cidade Origem { get => origem; set => origem = value; }
+        public Cidade Destino { get => destino; set => destino = value; }
+        public CaminhoEntreCidades Caminho { get => caminho; set => caminho = value; }
 
         public object Clone()
         {
