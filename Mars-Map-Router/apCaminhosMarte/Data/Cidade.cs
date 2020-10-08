@@ -4,25 +4,22 @@ namespace apCaminhosMarte.Data
 {
     class Cidade : IComparable<Cidade>
     {
-        private string nome;
-        private int id, x, y;
-
-        public int Id { get => id; set => id = value; }
-        public string Nome { get => nome; set => nome = value; }
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Cidade(int id, string nome, int x, int y)
         {
-            this.id = id;
-            this.nome = nome;
-            this.x = x;
-            this.y = y;
+            this.Id = id;
+            this.Nome = nome;
+            this.X = x;
+            this.Y = y;
         }
 
         public int CompareTo(Cidade other)
         {
-            return this.id.CompareTo(other.id);
+            return this.Id.CompareTo(other.Id);
         }
     }
 }

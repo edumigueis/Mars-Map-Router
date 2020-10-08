@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace apCaminhosMarte.Data
 {
-    class ArvoreBinaria<T> where T: IComparable<T>
+    class ArvoreBinaria<T> where T : IComparable<T>
     {
         protected NoArvore<T> raiz;
-        public ArvoreBinaria() { 
-        
+        public ArvoreBinaria()
+        {
+
         }
         public void Incluir(T info)
         {
