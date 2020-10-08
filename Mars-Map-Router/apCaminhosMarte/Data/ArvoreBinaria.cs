@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace apCaminhosMarte.Data
 {
@@ -7,21 +8,21 @@ namespace apCaminhosMarte.Data
         protected NoArvore<T> raiz;
 
         public ArvoreBinaria()
-        {}
+        { }
 
         public void Incluir(T info)
         {
             if (this.raiz == null)
                 this.raiz = new NoArvore<T>(info);
             else
-                incluirRec(raiz, info);
+                IncluirRec(raiz, info);
         }
 
-        private void incluirRec(NoArvore<T> atual, T info)
+        private void IncluirRec(NoArvore<T> atual, T info)
         {
             int comp = info.CompareTo(atual.Info);
 
-            if (comp == 0) 
+            if (comp == 0)
                 throw new Exception("Item já existente!");
 
             if (comp < 0)
@@ -29,23 +30,23 @@ namespace apCaminhosMarte.Data
                 if (atual.Esq == null)
                     atual.Esq = new NoArvore<T>(info);
                 else
-                    incluirRec(atual.Esq, info);
+                    IncluirRec(atual.Esq, info);
             }
-            else 
+            else
             {
                 if (atual.Dir == null)
                     atual.Dir = new NoArvore<T>(info);
                 else
-                    incluirRec(atual.Dir, info);
+                    IncluirRec(atual.Dir, info);
             }
         }
 
         public T Busca(T buscado)
         {
-            return achar(buscado, this.raiz);
+            return Achar(buscado, this.raiz);
         }
 
-        private T achar(T buscado, NoArvore<T> atual)
+        private T Achar(T buscado, NoArvore<T> atual)
         {
             if (atual == null)
                 throw new Exception("Informação inexistente!");
@@ -54,9 +55,26 @@ namespace apCaminhosMarte.Data
             if (comp == 0)
                 return atual.Info;
             if (comp < 0)
-                return achar(buscado, atual.Esq);
+                return Achar(buscado, atual.Esq);
             else
-                return achar(buscado, atual.Dir);
+                return Achar(buscado, atual.Dir);
+        }
+
+        public List<T> ToList()
+        {
+            List<T> result = new List<T>();
+            Converter(this.raiz, ref result);
+            return result;
+        }
+
+        private void Converter(NoArvore<T> atual, ref List<T> result)
+        {
+            if (atual == null)
+                return;
+
+            result.Add(atual.Info);
+            Converter(atual.Esq, ref result);
+            Converter(atual.Dir, ref result);
         }
     }
 }

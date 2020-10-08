@@ -1,4 +1,6 @@
-﻿using System;
+﻿using apCaminhosMarte.Data;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,6 +8,9 @@ namespace apCaminhosMarte
 {
     public partial class FrmApp : Form
     {
+        ArvoreBinaria<Cidade> Arvore { get; set; }
+        List<AvancoCaminho> Lista { get; set; }
+
         public FrmApp()
         {
             InitializeComponent();
@@ -52,6 +57,22 @@ namespace apCaminhosMarte
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
                 column.Width = 120;
+            }
+        }
+
+        private void FrmApp_Load(object sender, EventArgs e)
+        {
+            var leitor = new LeitorDeArquivoMarsMap();
+
+            Arvore = leitor.LerCidades();
+            Lista = leitor.LerCaminhos();
+
+            var lista = Arvore.ToList();
+
+            for(int i = 0; i < lista.Count; i++)
+            {
+                lsbOrigem.Items.Add((i + 1) + " - " + lista[i].Nome);
+                lsbDestino.Items.Add((i + 1) + " - " + lista[i].Nome);
             }
         }
 
@@ -109,6 +130,5 @@ namespace apCaminhosMarte
 
             e.DrawFocusRectangle();
         }
-
     }
 }
