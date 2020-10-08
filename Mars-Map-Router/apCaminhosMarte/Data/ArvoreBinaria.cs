@@ -48,7 +48,7 @@ namespace apCaminhosMarte.Data
         private T achar(T buscado, NoArvore<T> atual)
         {
             if (atual == null)
-                throw new Exception("T inexistente!");
+                throw new Exception("Informação inexistente!");
 
             int comp = buscado.CompareTo(atual.Info);
             if (comp == 0)
