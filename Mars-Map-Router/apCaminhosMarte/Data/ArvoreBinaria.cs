@@ -5,10 +5,12 @@ namespace apCaminhosMarte.Data
     class ArvoreBinaria<T> where T : IComparable<T>
     {
         protected NoArvore<T> raiz;
+
         public ArvoreBinaria()
         {
 
         }
+
         public void Incluir(T info)
         {
             if (this.raiz == null)
