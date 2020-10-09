@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace apCaminhosMarte.Data
 {
@@ -15,7 +16,7 @@ namespace apCaminhosMarte.Data
 
         public ArvoreBinaria<Cidade> LerCidades()
         {
-            StreamReader sr = new StreamReader("../../txt/Cidades.txt");
+            StreamReader sr = new StreamReader("../../txt/CidadesDes.txt", Encoding.UTF7);
 
             while (!sr.EndOfStream)
             {
@@ -31,7 +32,7 @@ namespace apCaminhosMarte.Data
 
         public List<AvancoCaminho> LerCaminhos()
         {
-            StreamReader sr = new StreamReader("../../txt/Caminhos.txt");
+            StreamReader sr = new StreamReader("../../txt/Caminhos.txt", Encoding.UTF7);
 
             List<AvancoCaminho> lista = new List<AvancoCaminho>();
 

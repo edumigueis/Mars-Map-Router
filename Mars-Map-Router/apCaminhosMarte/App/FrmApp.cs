@@ -9,6 +9,8 @@ namespace apCaminhosMarte
     public partial class FrmApp : Form
     {
         private Graphics g;
+        private Cidade origem;
+        private Cidade destino;
 
         ArvoreBinaria<Cidade> Arvore { get; set; }
         List<AvancoCaminho> Lista { get; set; }
@@ -71,6 +73,14 @@ namespace apCaminhosMarte
 
             var lista = Arvore.ToList();
 
+            var vet = lista.ToArray();
+            var vetRes = new object[vet.Length]();
+
+            for(int i = 0; i < vet.Length; i++)
+            {
+
+            }
+
             for (int i = 0; i < lista.Count; i++)
             {
                 lsbOrigem.Items.Add((i + 1) + " - " + lista[i].Nome);
@@ -80,7 +90,7 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Buscar caminhos entre cidades selecionadas");
+
         }
 
         private void lsbOrigem_DrawItem(object sender, DrawItemEventArgs e)
@@ -143,21 +153,21 @@ namespace apCaminhosMarte
                 yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
                 if (primeiraVez)
                     yf = 25;
-                g.DrawLine(caneta, x, y, xf, yf - 8);
+                g.DrawLine(caneta, x, y, xf, yf);
                 DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
-                g.FillEllipse(preenchimento, xf - 25, yf - 15, 100, 100);
-                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 10),
-                new SolidBrush(Color.White), xf - 10, yf + 15);
+                g.FillEllipse(preenchimento, xf - 50, yf - 10, 110, 110);
+                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 8),
+                new SolidBrush(Color.White), xf - 35, yf + 36);
             }
         }
 
         private void pictureBox4_Paint(object sender, PaintEventArgs e)
         {
-            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 100, (Math.PI / 180) * 90, 0.85, 400, "Poppins", e.Graphics);
+            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 100, (Math.PI / 180) * 90, 1.2, 400, "Poppins", e.Graphics);
         }
     }
 }
