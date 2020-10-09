@@ -5,17 +5,17 @@ namespace apCaminhosMarte.Data
 {
     class ArvoreBinaria<T> where T : IComparable<T>
     {
-        protected NoArvore<T> raiz;
+        public NoArvore<T> Raiz { get; set; }
 
         public ArvoreBinaria()
         { }
 
         public void Incluir(T info)
         {
-            if (this.raiz == null)
-                this.raiz = new NoArvore<T>(info);
+            if (this.Raiz == null)
+                this.Raiz = new NoArvore<T>(info);
             else
-                IncluirRec(raiz, info);
+                IncluirRec(Raiz, info);
         }
 
         private void IncluirRec(NoArvore<T> atual, T info)
@@ -43,7 +43,7 @@ namespace apCaminhosMarte.Data
 
         public T Busca(T buscado)
         {
-            return Achar(buscado, this.raiz);
+            return Achar(buscado, this.Raiz);
         }
 
         private T Achar(T buscado, NoArvore<T> atual)
@@ -63,7 +63,7 @@ namespace apCaminhosMarte.Data
         public List<T> ToList()
         {
             List<T> result = new List<T>();
-            Converter(this.raiz, ref result);
+            Converter(this.Raiz, ref result);
             return result;
         }
 
@@ -75,6 +75,6 @@ namespace apCaminhosMarte.Data
             result.Add(atual.Info);
             Converter(atual.Esq, ref result);
             Converter(atual.Dir, ref result);
-        }
+        }    
     }
 }

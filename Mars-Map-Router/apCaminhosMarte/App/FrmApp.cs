@@ -8,6 +8,8 @@ namespace apCaminhosMarte
 {
     public partial class FrmApp : Form
     {
+        private Graphics g;
+
         ArvoreBinaria<Cidade> Arvore { get; set; }
         List<AvancoCaminho> Lista { get; set; }
 
@@ -69,7 +71,7 @@ namespace apCaminhosMarte
 
             var lista = Arvore.ToList();
 
-            for(int i = 0; i < lista.Count; i++)
+            for (int i = 0; i < lista.Count; i++)
             {
                 lsbOrigem.Items.Add((i + 1) + " - " + lista[i].Nome);
                 lsbDestino.Items.Add((i + 1) + " - " + lista[i].Nome);
@@ -108,7 +110,7 @@ namespace apCaminhosMarte
         private void lsbDestino_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0) return;
-            
+
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
                 e = new DrawItemEventArgs(e.Graphics,
@@ -117,8 +119,8 @@ namespace apCaminhosMarte
                                           e.Index,
                                           e.State ^ DrawItemState.Selected,
                                           e.ForeColor,
-                                          Color.FromArgb(229, 237, 250)); 
-                                                                         
+                                          Color.FromArgb(229, 237, 250));
+
                 e.DrawBackground();
                 e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
             }
@@ -129,6 +131,33 @@ namespace apCaminhosMarte
             }
 
             e.DrawFocusRectangle();
+        }
+
+        private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
+        {
+            int xf, yf;
+            if (raiz != null)
+            {
+                Pen caneta = new Pen(Color.FromArgb(85,85,85), 2);
+                xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
+                yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
+                if (primeiraVez)
+                    yf = 25;
+                g.DrawLine(caneta, x, y, xf, yf - 8);
+                DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
+                incremento * 0.60, comprimento * 0.8, font, g);
+                DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
+                incremento * 0.60, comprimento * 0.8, font, g);
+                SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
+                g.FillEllipse(preenchimento, xf - 25, yf - 15, 100, 100);
+                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 10),
+                new SolidBrush(Color.White), xf - 10, yf + 15);
+            }
+        }
+
+        private void pictureBox4_Paint(object sender, PaintEventArgs e)
+        {
+            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 100, (Math.PI / 180) * 90, 0.85, 400, "Poppins", e.Graphics);
         }
     }
 }
