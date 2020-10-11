@@ -64,6 +64,7 @@
     <Compile Include="Data\CaminhoEntreCidades.cs" />
     <Compile Include="Data\Cidade.cs" />
     <Compile Include="Data\LeitorDeArquivoMarsMap.cs" />
+    <Compile Include="Data\LsbItems.cs" />
     <Compile Include="Data\NoArvore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\FrmApp.resx">

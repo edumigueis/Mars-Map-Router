@@ -6,8 +6,10 @@ using System.Windows.Forms;
 
 namespace apCaminhosMarte
 {
+
     public partial class FrmApp : Form
     {
+
         private Graphics g;
         private Cidade origem;
         private Cidade destino;
@@ -73,23 +75,30 @@ namespace apCaminhosMarte
 
             var lista = Arvore.ToList();
 
-            var vet = lista.ToArray();
-            var vetRes = new object[vet.Length]();
-
-            for(int i = 0; i < vet.Length; i++)
-            {
-
-            }
+            List<LsbItems> dataOrigem = new List<LsbItems>();
+            List<LsbItems> dataDestino = new List<LsbItems>();
 
             for (int i = 0; i < lista.Count; i++)
             {
-                lsbOrigem.Items.Add((i + 1) + " - " + lista[i].Nome);
-                lsbDestino.Items.Add((i + 1) + " - " + lista[i].Nome);
+                dataOrigem.Add(new LsbItems(lista[i].Id, lista[i].Nome));
+                dataDestino.Add(new LsbItems(lista[i].Id, lista[i].Nome));
             }
+
+            dataDestino.Sort();
+            dataOrigem.Sort();
+
+            lsbDestino.DataSource = dataDestino;
+            lsbOrigem.DataSource = dataOrigem;
+
+            lsbDestino.DisplayMember = "Text";
+            lsbOrigem.DisplayMember = "Text";
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
+            origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
+            destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
+
 
         }
 
@@ -143,31 +152,49 @@ namespace apCaminhosMarte
             e.DrawFocusRectangle();
         }
 
+        private void pictureBox4_Paint(object sender, PaintEventArgs e)
+        {
+            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 30, (Math.PI / 180) * 90, 1, 400, "Poppins", e.Graphics);
+        }
+
+        private void pbMapa_Paint(object sender, PaintEventArgs e)
+        {
+            DesenharCidades(e.Graphics, "Poppins");
+        }
+
         private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
         {
             int xf, yf;
             if (raiz != null)
             {
-                Pen caneta = new Pen(Color.FromArgb(85,85,85), 2);
+                Pen caneta = new Pen(Color.FromArgb(85, 85, 85), 2);
                 xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
                 yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
                 if (primeiraVez)
-                    yf = 25;
+                    yf = 30;
                 g.DrawLine(caneta, x, y, xf, yf);
                 DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
-                g.FillEllipse(preenchimento, xf - 50, yf - 10, 110, 110);
-                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 8),
-                new SolidBrush(Color.White), xf - 35, yf + 36);
+                g.FillRectangle(preenchimento, xf - 40, yf, 80, 30);
+                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 7),
+                new SolidBrush(Color.White), xf - 35, yf + 8);
             }
         }
 
-        private void pictureBox4_Paint(object sender, PaintEventArgs e)
+        private void DesenharCidades(Graphics g, string font)
         {
-            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 100, (Math.PI / 180) * 90, 1.2, 400, "Poppins", e.Graphics);
+            for (int i = 0; i < Arvore.Qtd; i++)
+            {
+                var cidade = new Cidade(i, default, default, default);
+                int x = (Arvore.Busca(cidade).X * pbMapa.Width) / 4096;
+                int y = (Arvore.Busca(cidade).Y * pbMapa.Height) / 2048;
+
+                g.FillRectangle(new SolidBrush(Color.Black), x - 2, y - 2, 5, 5);
+                g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 7), new SolidBrush(Color.Black), x + 3, y - 12);
+            }
         }
     }
 }
