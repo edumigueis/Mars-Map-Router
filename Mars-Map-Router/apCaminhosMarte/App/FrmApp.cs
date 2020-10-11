@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace apCaminhosMarte
@@ -186,14 +187,23 @@ namespace apCaminhosMarte
 
         private void DesenharCidades(Graphics g, string font)
         {
+            for (int i = 0; i < Lista.Count; i++)
+            {
+                Pen caneta = new Pen(Color.FromArgb(190, 184, 28, 28), 2);
+                caneta.DashStyle = DashStyle.Dash;
+                caneta.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
+                caneta.DashCap = DashCap.Round;
+                g.DrawLine(caneta, (Lista[i].Origem.X * pbMapa.Width) / 4096, (Lista[i].Origem.Y * pbMapa.Height) / 2048, (Lista[i].Destino.X * pbMapa.Width) / 4096, (Lista[i].Destino.Y * pbMapa.Height) / 2048);
+            }
+
             for (int i = 0; i < Arvore.Qtd; i++)
             {
                 var cidade = new Cidade(i, default, default, default);
                 int x = (Arvore.Busca(cidade).X * pbMapa.Width) / 4096;
                 int y = (Arvore.Busca(cidade).Y * pbMapa.Height) / 2048;
 
-                g.FillRectangle(new SolidBrush(Color.Black), x - 2, y - 2, 5, 5);
-                g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 7), new SolidBrush(Color.Black), x + 3, y - 12);
+                g.FillRectangle(new SolidBrush(Color.Black), x - 3, y - 3, 6, 6);
+                g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 8, FontStyle.Bold), new SolidBrush(Color.Black), x + 3, y + 2);
             }
         }
     }
