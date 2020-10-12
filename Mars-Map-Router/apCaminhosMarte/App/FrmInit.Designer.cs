@@ -66,6 +66,7 @@
             this.pictureBox2.Size = new System.Drawing.Size(28, 28);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.UseWaitCursor = true;
             // 
             // pictureBox1
             // 
@@ -78,6 +79,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(67, 64);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.UseWaitCursor = true;
             // 
             // pictureBox3
             // 
@@ -90,6 +92,7 @@
             this.pictureBox3.Size = new System.Drawing.Size(48, 48);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.UseWaitCursor = true;
             // 
             // timer2
             // 
@@ -113,6 +116,7 @@
             this.label1.Size = new System.Drawing.Size(121, 25);
             this.label1.TabIndex = 4;
             this.label1.Text = "Mars Maps";
+            this.label1.UseWaitCursor = true;
             // 
             // label2
             // 
@@ -125,6 +129,7 @@
             this.label2.Size = new System.Drawing.Size(72, 15);
             this.label2.TabIndex = 5;
             this.label2.Text = "Welcome to";
+            this.label2.UseWaitCursor = true;
             // 
             // panel1
             // 
@@ -137,6 +142,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(247, 271);
             this.panel1.TabIndex = 6;
+            this.panel1.UseWaitCursor = true;
             // 
             // panel2
             // 
@@ -145,6 +151,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(2, 500);
             this.panel2.TabIndex = 7;
+            this.panel2.UseWaitCursor = true;
             // 
             // panel3
             // 
@@ -153,6 +160,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(2, 500);
             this.panel3.TabIndex = 8;
+            this.panel3.UseWaitCursor = true;
             // 
             // panel4
             // 
@@ -161,6 +169,7 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(337, 2);
             this.panel4.TabIndex = 9;
+            this.panel4.UseWaitCursor = true;
             // 
             // panel5
             // 
@@ -169,6 +178,7 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(337, 2);
             this.panel5.TabIndex = 10;
+            this.panel5.UseWaitCursor = true;
             // 
             // FrmInit
             // 
@@ -188,6 +198,7 @@
             this.Name = "FrmInit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmInit";
+            this.UseWaitCursor = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

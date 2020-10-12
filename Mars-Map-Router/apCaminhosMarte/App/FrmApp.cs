@@ -11,12 +11,14 @@ namespace apCaminhosMarte
     public partial class FrmApp : Form
     {
 
-        private Graphics g; 
+        private Graphics g;
         private Cidade origem;
         private Cidade destino;
 
         ArvoreBinaria<Cidade> Arvore { get; set; }
         List<AvancoCaminho> Lista { get; set; }
+
+        PictureBox pbAnterior = new PictureBox();
 
         public FrmApp()
         {
@@ -129,7 +131,8 @@ namespace apCaminhosMarte
 
         private void lsbDestino_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if (e.Index < 0) return;
+            if (e.Index <= 0)
+                return;
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
@@ -153,11 +156,6 @@ namespace apCaminhosMarte
             e.DrawFocusRectangle();
         }
 
-        private void pictureBox4_Paint(object sender, PaintEventArgs e)
-        {
-            DesenharArvore(true, Arvore.Raiz, pictureBox4.Width / 2 - 100, 30, (Math.PI / 180) * 90, 1, 400, "Poppins", e.Graphics);
-        }
-
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
             DesenharCidades(e.Graphics, "Poppins");
@@ -172,16 +170,16 @@ namespace apCaminhosMarte
                 xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
                 yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
                 if (primeiraVez)
-                    yf = 30;
+                    yf = 80;
                 g.DrawLine(caneta, x, y, xf, yf);
                 DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
                 SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
-                g.FillRectangle(preenchimento, xf - 40, yf, 80, 30);
+                g.FillRectangle(preenchimento, xf - 45, yf, 90, 30);
                 g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 7),
-                new SolidBrush(Color.White), xf - 35, yf + 8);
+                new SolidBrush(Color.White), xf - 40, yf + 8);
             }
         }
 
@@ -205,6 +203,41 @@ namespace apCaminhosMarte
                 g.FillRectangle(new SolidBrush(Color.Black), x - 3, y - 3, 6, 6);
                 g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 8, FontStyle.Bold), new SolidBrush(Color.Black), x + 3, y + 2);
             }
+        }
+
+
+        private void FrmApp_Shown(object sender, EventArgs e)
+        {
+            var pb = new PictureBox();
+            pb.Width = panel7.Width;
+            pb.Height = panel7.Height;
+            pb.SizeMode = PictureBoxSizeMode.AutoSize;
+            Bitmap bmp = new Bitmap(panel7.Width, panel7.Height);
+            DesenharArvore(true, Arvore.Raiz, bmp.Width / 2, 80, (Math.PI / 180) * 90, 1, 400, "Poppins", Graphics.FromImage(bmp));
+            pb.Image = bmp;
+
+            panel7.Controls.Add(pb);
+
+            panel7.Controls[panel7.Controls.IndexOf(panel8)].BringToFront();
+        }
+
+        private void FrmApp_Resize(object sender, EventArgs e)
+        {
+            if (Arvore == null)
+                return;
+
+            var pb = new PictureBox();
+            pb.Width = panel7.Width;
+            pb.Height = panel7.Height;
+            pb.SizeMode = PictureBoxSizeMode.AutoSize;
+            Bitmap bmp = new Bitmap(panel7.Width, panel7.Height);
+            DesenharArvore(true, Arvore.Raiz, bmp.Width / 2, 80, (Math.PI / 180) * 90, 1, 400, "Poppins", Graphics.FromImage(bmp));
+            pb.Image = bmp;
+
+            panel7.Controls.Add(pb);
+
+            panel7.Controls[panel7.Controls.IndexOf(panel8)].BringToFront();
+
         }
     }
 }
