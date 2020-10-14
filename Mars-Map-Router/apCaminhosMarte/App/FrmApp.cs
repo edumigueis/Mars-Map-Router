@@ -99,6 +99,10 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
+            label3.Visible = true;
+            label4.Visible = true;
+            dataGridView1.Visible = true;
+            dataGridView2.Visible = true;
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
@@ -107,7 +111,12 @@ namespace apCaminhosMarte
 
         private void lsbOrigem_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if (e.Index < 0) return;
+            if (lsbOrigem.Items.Count == 0)
+                return;
+
+            if (e.Index < 0)
+                return;
+
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
                 e = new DrawItemEventArgs(e.Graphics,
@@ -131,7 +140,10 @@ namespace apCaminhosMarte
 
         private void lsbDestino_DrawItem(object sender, DrawItemEventArgs e)
         {
-            if (e.Index <= 0)
+            if (lsbDestino.Items.Count == 0)
+                return;
+
+            if (e.Index < 0)
                 return;
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
@@ -145,12 +157,12 @@ namespace apCaminhosMarte
                                           Color.FromArgb(229, 237, 250));
 
                 e.DrawBackground();
-                e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+                e.Graphics.DrawString(lsbDestino.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
             }
             else
             {
                 e.DrawBackground();
-                e.Graphics.DrawString(lsbOrigem.Items[e.Index].ToString(), e.Font, Brushes.WhiteSmoke, e.Bounds, StringFormat.GenericDefault);
+                e.Graphics.DrawString(lsbDestino.Items[e.Index].ToString(), e.Font, Brushes.WhiteSmoke, e.Bounds, StringFormat.GenericDefault);
             }
 
             e.DrawFocusRectangle();
