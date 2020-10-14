@@ -14,9 +14,13 @@ namespace apCaminhosMarte
         private Graphics g;
         private Cidade origem;
         private Cidade destino;
+        private bool[] passou;
 
         ArvoreBinaria<Cidade> Arvore { get; set; }
-        List<AvancoCaminho> Lista { get; set; }
+        AvancoCaminho[,] MatrizCaminhos { get; set; }
+        List<AvancoCaminho> ListaCaminhos { get; set; }
+        List<Stack<AvancoCaminho>> Resultados { get; set; }
+        Stack<AvancoCaminho> CaminhoEncontrado { get; set; }
 
         PictureBox pbAnterior = new PictureBox();
 
@@ -74,7 +78,8 @@ namespace apCaminhosMarte
             var leitor = new LeitorDeArquivoMarsMap();
 
             Arvore = leitor.LerCidades();
-            Lista = leitor.LerCaminhos();
+            ListaCaminhos = leitor.LerCaminhos();
+            MatrizCaminhos = leitor.LerCaminhosComoMatriz();
 
             var lista = Arvore.ToList();
 
@@ -105,6 +110,15 @@ namespace apCaminhosMarte
             dataGridView2.Visible = true;
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
+
+            if (!BuscarCaminhos())
+            {
+                var cu = Resultados;
+            }
+            else
+            {
+                var cu = Resultados;
+            }
 
 
         }
@@ -173,51 +187,6 @@ namespace apCaminhosMarte
             DesenharCidades(e.Graphics, "Poppins");
         }
 
-        private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
-        {
-            int xf, yf;
-            if (raiz != null)
-            {
-                Pen caneta = new Pen(Color.FromArgb(85, 85, 85), 2);
-                xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
-                yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
-                if (primeiraVez)
-                    yf = 80;
-                g.DrawLine(caneta, x, y, xf, yf);
-                DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
-                incremento * 0.60, comprimento * 0.8, font, g);
-                DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
-                incremento * 0.60, comprimento * 0.8, font, g);
-                SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
-                g.FillRectangle(preenchimento, xf - 45, yf, 90, 30);
-                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 7),
-                new SolidBrush(Color.White), xf - 40, yf + 8);
-            }
-        }
-
-        private void DesenharCidades(Graphics g, string font)
-        {
-            for (int i = 0; i < Lista.Count; i++)
-            {
-                Pen caneta = new Pen(Color.FromArgb(190, 184, 28, 28), 2);
-                caneta.DashStyle = DashStyle.Dash;
-                caneta.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
-                caneta.DashCap = DashCap.Round;
-                g.DrawLine(caneta, (Lista[i].Origem.X * pbMapa.Width) / 4096, (Lista[i].Origem.Y * pbMapa.Height) / 2048, (Lista[i].Destino.X * pbMapa.Width) / 4096, (Lista[i].Destino.Y * pbMapa.Height) / 2048);
-            }
-
-            for (int i = 0; i < Arvore.Qtd; i++)
-            {
-                var cidade = new Cidade(i, default, default, default);
-                int x = (Arvore.Busca(cidade).X * pbMapa.Width) / 4096;
-                int y = (Arvore.Busca(cidade).Y * pbMapa.Height) / 2048;
-
-                g.FillRectangle(new SolidBrush(Color.Black), x - 3, y - 3, 6, 6);
-                g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 8, FontStyle.Bold), new SolidBrush(Color.Black), x + 3, y + 2);
-            }
-        }
-
-
         private void FrmApp_Shown(object sender, EventArgs e)
         {
             var pb = new PictureBox();
@@ -250,6 +219,91 @@ namespace apCaminhosMarte
 
             panel7.Controls[panel7.Controls.IndexOf(panel8)].BringToFront();
 
+        }
+
+        private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
+        {
+            int xf, yf;
+            if (raiz != null)
+            {
+                Pen caneta = new Pen(Color.FromArgb(85, 85, 85), 2);
+                xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
+                yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
+                if (primeiraVez)
+                    yf = 80;
+                g.DrawLine(caneta, x, y, xf, yf);
+                DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
+                incremento * 0.60, comprimento * 0.8, font, g);
+                DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
+                incremento * 0.60, comprimento * 0.8, font, g);
+                SolidBrush preenchimento = new SolidBrush(Color.MediumTurquoise);
+                g.FillRectangle(preenchimento, xf - 45, yf, 90, 30);
+                g.DrawString(Convert.ToString(raiz.Info.Nome), new Font(font, 7),
+                new SolidBrush(Color.White), xf - 40, yf + 8);
+            }
+        }
+
+        private void DesenharCidades(Graphics g, string font)
+        {
+            for (int i = 0; i < ListaCaminhos.Count; i++)
+            {
+                Pen caneta = new Pen(Color.FromArgb(190, 184, 28, 28), 2);
+                caneta.DashStyle = DashStyle.Dash;
+                caneta.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
+                caneta.DashCap = DashCap.Round;
+                g.DrawLine(caneta, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
+            }
+
+            for (int i = 0; i < Arvore.Qtd; i++)
+            {
+                var cidade = new Cidade(i, default, default, default);
+                int x = (Arvore.Busca(cidade).X * pbMapa.Width) / 4096;
+                int y = (Arvore.Busca(cidade).Y * pbMapa.Height) / 2048;
+
+                g.FillRectangle(new SolidBrush(Color.Black), x - 3, y - 3, 6, 6);
+                g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 8, FontStyle.Bold), new SolidBrush(Color.Black), x + 3, y + 2);
+            }
+        }
+
+        private bool BuscarCaminhos()
+        {
+            CaminhoEncontrado = new Stack<AvancoCaminho>();
+            Resultados = new List<Stack<AvancoCaminho>>();
+            passou = new bool[Arvore.Qtd];
+
+            BuscarCaminhosRec(origem);
+
+            if (Resultados.Count <= 0)
+                return false;
+
+            return true;
+        }
+
+        private void BuscarCaminhosRec(Cidade atual)
+        {
+            for (int j = 0; j < MatrizCaminhos.GetLength(1); j++)
+            {
+                AvancoCaminho ac = MatrizCaminhos[atual.Id, j];
+
+                if (ac != null && !passou[j])
+                {
+                    CaminhoEncontrado.Push(ac);
+
+                    if (j == destino.Id)
+                    {
+                        Resultados.Add(CaminhoEncontrado);
+                        CaminhoEncontrado = new Stack<AvancoCaminho>();
+                    }
+                    else
+                    {
+                        passou[atual.Id] = true;
+                        BuscarCaminhosRec(ac.Destino);
+                    }
+
+                    if (CaminhoEncontrado.Count > 0)
+                        CaminhoEncontrado.Pop();
+                }
+            }
         }
     }
 }

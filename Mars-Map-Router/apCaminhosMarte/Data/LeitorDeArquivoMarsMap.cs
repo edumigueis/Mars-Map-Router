@@ -7,6 +7,8 @@ namespace apCaminhosMarte.Data
 {
     class LeitorDeArquivoMarsMap
     {
+        private int qtdLinhas = 0;
+
         ArvoreBinaria<Cidade> Arvore { get; set; }
 
         public LeitorDeArquivoMarsMap()
@@ -25,6 +27,8 @@ namespace apCaminhosMarte.Data
                                                     linha.Substring(3, 15).Trim(), 
                                           int.Parse(linha.Substring(18, 5)), 
                                           int.Parse(linha.Substring(23, 5))));
+
+                qtdLinhas++;
             }
 
             return Arvore;
@@ -44,6 +48,25 @@ namespace apCaminhosMarte.Data
                                             new CaminhoEntreCidades(int.Parse(linha.Substring(6, 5)), 
                                                                     int.Parse(linha.Substring(11, 4)), 
                                                                     int.Parse(linha.Substring(15, 5)))));
+            }
+
+            return lista;
+        }
+
+        public AvancoCaminho[,] LerCaminhosComoMatriz()
+        {
+            StreamReader sr = new StreamReader("../../txt/Caminhos.txt", Encoding.UTF7);
+
+            AvancoCaminho[,] lista = new AvancoCaminho[qtdLinhas, qtdLinhas];
+
+            while (!sr.EndOfStream)
+            {
+                string linha = sr.ReadLine();
+                lista[int.Parse(linha.Substring(0, 3)), int.Parse(linha.Substring(3, 3))] = new AvancoCaminho(Arvore.Busca(new Cidade(int.Parse(linha.Substring(0, 3)), default, default, default)),
+                                                                                                                    Arvore.Busca(new Cidade(int.Parse(linha.Substring(3, 3)), default, default, default)),
+                                                                                                                    new CaminhoEntreCidades(int.Parse(linha.Substring(6, 5)),
+                                                                                                                                            int.Parse(linha.Substring(11, 4)),
+                                                                                                                                            int.Parse(linha.Substring(15, 5))));
             }
 
             return lista;
