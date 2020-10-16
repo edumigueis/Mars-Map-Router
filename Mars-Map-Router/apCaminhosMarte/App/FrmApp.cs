@@ -287,21 +287,19 @@ namespace apCaminhosMarte
 
                 if (ac != null && !passou[j])
                 {
+                    passou[atual.Id] = true;
                     CaminhoEncontrado.Push(ac);
 
                     if (j == destino.Id)
                     {
                         Resultados.Add(CaminhoEncontrado);
-                        CaminhoEncontrado = new Stack<AvancoCaminho>();
+                        CaminhoEncontrado.Pop();
+                        passou[atual.Id] = false;
                     }
                     else
                     {
-                        passou[atual.Id] = true;
                         BuscarCaminhosRec(ac.Destino);
                     }
-
-                    if (CaminhoEncontrado.Count > 0)
-                        CaminhoEncontrado.Pop();
                 }
             }
         }
