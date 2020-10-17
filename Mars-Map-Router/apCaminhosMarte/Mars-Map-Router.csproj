@@ -66,6 +66,7 @@
     <Compile Include="Data\LeitorDeArquivoMarsMap.cs" />
     <Compile Include="Data\LsbItems.cs" />
     <Compile Include="Data\NoArvore.cs" />
+    <Compile Include="Data\Solucionador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="App\FrmApp.resx">
       <DependentUpon>FrmApp.cs</DependentUpon>

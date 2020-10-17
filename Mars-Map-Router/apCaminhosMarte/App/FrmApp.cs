@@ -15,14 +15,19 @@ namespace apCaminhosMarte
         private Cidade origem;
         private Cidade destino;
         private bool[] passou;
+        private ArvoreBinaria<Cidade> arvore;
+        private AvancoCaminho[,] matrizCaminhos;
+        private List<AvancoCaminho> listaCaminhos;
+        private List<AvancoCaminho[]> resultados;
+        private Stack<AvancoCaminho> caminhoEncontrado;
 
-        ArvoreBinaria<Cidade> Arvore { get; set; }
-        AvancoCaminho[,] MatrizCaminhos { get; set; }
-        List<AvancoCaminho> ListaCaminhos { get; set; }
-        List<Stack<AvancoCaminho>> Resultados { get; set; }
-        Stack<AvancoCaminho> CaminhoEncontrado { get; set; }
+        internal ArvoreBinaria<Cidade> Arvore { get => arvore; set => arvore = value; }
+        internal AvancoCaminho[,] MatrizCaminhos { get => matrizCaminhos; set => matrizCaminhos = value; }
+        internal List<AvancoCaminho> ListaCaminhos { get => listaCaminhos; set => listaCaminhos = value; }
+        internal List<AvancoCaminho[]> Resultados { get => resultados; set => resultados = value; }
+        internal Stack<AvancoCaminho> CaminhoEncontrado { get => caminhoEncontrado; set => caminhoEncontrado = value; }
 
-        PictureBox pbAnterior = new PictureBox();
+        private PictureBox pbAnterior = new PictureBox();
 
         public FrmApp()
         {
@@ -111,7 +116,7 @@ namespace apCaminhosMarte
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
-            if (!BuscarCaminhos())
+            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, ref arvore, ref origem, ref destino, ref passou, ref matrizCaminhos))
             {
                 var cu = Resultados;
             }
@@ -231,6 +236,8 @@ namespace apCaminhosMarte
                 yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
                 if (primeiraVez)
                     yf = 80;
+                else
+                    comprimento -= 20;
                 g.DrawLine(caneta, x, y, xf, yf);
                 DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
@@ -247,11 +254,13 @@ namespace apCaminhosMarte
         {
             for (int i = 0; i < ListaCaminhos.Count; i++)
             {
-                Pen caneta = new Pen(Color.FromArgb(190, 184, 28, 28), 2);
-                caneta.DashStyle = DashStyle.Dash;
-                caneta.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
-                caneta.DashCap = DashCap.Round;
-                g.DrawLine(caneta, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
+                Pen c = new Pen(Color.Black, 1f);
+                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
+                c.CustomEndCap = bigArrow;
+                c.DashStyle = DashStyle.Dash;
+                c.DashPattern = new float[] { 8.0f, 8.0f, 8.0f, 8.0f };
+                c.DashCap = DashCap.Round;
+                g.DrawLine(c, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
             }
 
             for (int i = 0; i < Arvore.Qtd; i++)
@@ -262,45 +271,6 @@ namespace apCaminhosMarte
 
                 g.FillRectangle(new SolidBrush(Color.Black), x - 3, y - 3, 6, 6);
                 g.DrawString(Arvore.Busca(cidade).Nome, new Font(font, 8, FontStyle.Bold), new SolidBrush(Color.Black), x + 3, y + 2);
-            }
-        }
-
-        private bool BuscarCaminhos()
-        {
-            CaminhoEncontrado = new Stack<AvancoCaminho>();
-            Resultados = new List<Stack<AvancoCaminho>>();
-            passou = new bool[Arvore.Qtd];
-
-            BuscarCaminhosRec(origem);
-
-            if (Resultados.Count <= 0)
-                return false;
-
-            return true;
-        }
-
-        private void BuscarCaminhosRec(Cidade atual)
-        {
-            for (int j = 0; j < MatrizCaminhos.GetLength(1); j++)
-            {
-                AvancoCaminho ac = MatrizCaminhos[atual.Id, j];
-
-                if (ac != null && !passou[j])
-                {
-                    passou[atual.Id] = true;
-                    CaminhoEncontrado.Push(ac);
-
-                    if (j == destino.Id)
-                    {
-                        Resultados.Add(CaminhoEncontrado);
-                        CaminhoEncontrado.Pop();
-                        passou[atual.Id] = false;
-                    }
-                    else
-                    {
-                        BuscarCaminhosRec(ac.Destino);
-                    }
-                }
             }
         }
     }
