@@ -35,6 +35,10 @@
             this.tpRotas = new System.Windows.Forms.TabPage();
             this.pbMapa = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -56,6 +60,8 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tpRotas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
@@ -95,7 +101,7 @@
             this.tpRotas.Controls.Add(this.panel1);
             this.tpRotas.Location = new System.Drawing.Point(4, 24);
             this.tpRotas.Name = "tpRotas";
-            this.tpRotas.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpRotas.Padding = new System.Windows.Forms.Padding(3);
             this.tpRotas.Size = new System.Drawing.Size(1274, 554);
             this.tpRotas.TabIndex = 0;
             this.tpRotas.Text = "  Routes  ⛌  ";
@@ -121,6 +127,12 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.radioButton3);
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButton1);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.dataGridView2);
@@ -130,6 +142,57 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(309, 557);
             this.panel1.TabIndex = 12;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(184, 523);
+            this.radioButton3.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(105, 19);
+            this.radioButton3.TabIndex = 18;
+            this.radioButton3.Text = "Lines + Arrows";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Click += new System.EventHandler(this.radioButton3_Click);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(105, 523);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(76, 19);
+            this.radioButton2.TabIndex = 17;
+            this.radioButton2.Text = "Just lines";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.Click += new System.EventHandler(this.radioButton2_Click);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(16, 523);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(86, 19);
+            this.radioButton1.TabIndex = 16;
+            this.radioButton1.Text = "Don\'t show";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.radioButton1_Click);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 495);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 17);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Lines ||";
             // 
             // panel2
             // 
@@ -350,7 +413,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(256, 217);
+            this.dataGridView1.Size = new System.Drawing.Size(256, 149);
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.Visible = false;
             // 
@@ -373,7 +436,7 @@
             this.tpArvore.Controls.Add(this.panel7);
             this.tpArvore.Location = new System.Drawing.Point(4, 24);
             this.tpArvore.Name = "tpArvore";
-            this.tpArvore.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpArvore.Padding = new System.Windows.Forms.Padding(3);
             this.tpArvore.Size = new System.Drawing.Size(1274, 554);
             this.tpArvore.TabIndex = 1;
             this.tpArvore.Text = "   Tree  🌲  ";
@@ -425,6 +488,26 @@
             this.label6.Text = "This is a representation of a Binary Tree Data Structure used to\r\nstore the citie" +
     "s\' data into RAM.";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Firebrick;
+            this.label5.Location = new System.Drawing.Point(12, 217);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(217, 30);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "A cidade de destino deve ser diferente \r\nda cidade de origem :)";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.Firebrick;
+            this.label8.Location = new System.Drawing.Point(11, 217);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(218, 30);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Nenhum caminho foi encontrado entre\r\nas cidades especificadas :(";
+            // 
             // FrmApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,7 +516,7 @@
             this.ClientSize = new System.Drawing.Size(1275, 581);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(903, 574);
+            this.MinimumSize = new System.Drawing.Size(902, 573);
             this.Name = "FrmApp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mars Maps";
@@ -491,6 +574,12 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label5;
     }
 }
 

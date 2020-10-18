@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace apCaminhosMarte
@@ -10,71 +11,44 @@ namespace apCaminhosMarte
 
     public partial class FrmApp : Form
     {
-
+        private bool achou = false;
         private Graphics g;
         private Cidade origem;
         private Cidade destino;
-        private bool[] passou;
+        private ArvoreBinaria<Cidade> arvore;
+        private AvancoCaminho[,] matrizCaminhos;
+        private List<AvancoCaminho> listaCaminhos;
+        private List<AvancoCaminho[]> resultados;
+        private Stack<AvancoCaminho> caminhoEncontrado;
+        private AvancoCaminho[] listaMelhorCaminho;
 
-        ArvoreBinaria<Cidade> Arvore { get; set; }
-        AvancoCaminho[,] MatrizCaminhos { get; set; }
-        List<AvancoCaminho> ListaCaminhos { get; set; }
-        List<Stack<AvancoCaminho>> Resultados { get; set; }
-        Stack<AvancoCaminho> CaminhoEncontrado { get; set; }
+        internal ArvoreBinaria<Cidade> Arvore { get => arvore; set => arvore = value; }
+        internal AvancoCaminho[,] MatrizCaminhos { get => matrizCaminhos; set => matrizCaminhos = value; }
+        internal List<AvancoCaminho> ListaCaminhos { get => listaCaminhos; set => listaCaminhos = value; }
+        internal List<AvancoCaminho[]> Resultados { get => resultados; set => resultados = value; }
+        internal Stack<AvancoCaminho> CaminhoEncontrado { get => caminhoEncontrado; set => caminhoEncontrado = value; }
+        internal AvancoCaminho[] ListaMelhorCaminho { get => listaMelhorCaminho; set => listaMelhorCaminho = value; }
 
-        PictureBox pbAnterior = new PictureBox();
+        private PictureBox pbAnterior = new PictureBox();
 
         public FrmApp()
         {
             InitializeComponent();
-            panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
-            lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
-            lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
-            btnBuscar.BackColor = Color.FromArgb(255, 60, 80, 185);
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView2.RowHeadersVisible = false;
-            pbMapa.BackColor = Color.FromArgb(92, 213, 189);
-            dataGridView2.Columns.Add("a", "a");
-            dataGridView2.Columns.Add("b", "b");
-            dataGridView2.Columns.Add("c", "c");
-            dataGridView2.Columns.Add("d", "d");
-            dataGridView2.Rows.Add();
-            dataGridView2.Rows[0].Cells[0].Value = "Tharsis  ->";
-            dataGridView2.Rows[0].Cells[1].Value = "Portholee  ->";
-            dataGridView2.Rows[0].Cells[2].Value = "Redsea  ->";
-            dataGridView2.Rows[0].Cells[3].Value = "Bothadge";
-            foreach (DataGridViewColumn column in dataGridView2.Columns)
-            {
-                column.Width = 120;
-            }
-
-            dataGridView1.Columns.Add("a", "a");
-            dataGridView1.Columns.Add("b", "b");
-            dataGridView1.Columns.Add("c", "c");
-            dataGridView1.Columns.Add("d", "d");
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[0].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[0].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[0].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[0].Cells[3].Value = "Bothadge";
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[1].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[1].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[1].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[1].Cells[3].Value = "Bothadge";
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[2].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[2].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[2].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[2].Cells[3].Value = "Bothadge";
-            foreach (DataGridViewColumn column in dataGridView1.Columns)
-            {
-                column.Width = 120;
-            }
         }
 
         private void FrmApp_Load(object sender, EventArgs e)
         {
+            panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
+            lsbDestino.BackColor = Color.FromArgb(255, 60, 80, 185);
+            lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
+            btnBuscar.BackColor = Color.FromArgb(255, 60, 80, 185);
+
+            label5.Visible = false;
+            label8.Visible = false;
+
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView2.RowHeadersVisible = false;
+
             var leitor = new LeitorDeArquivoMarsMap();
 
             Arvore = leitor.LerCidades();
@@ -104,22 +78,51 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            label3.Visible = true;
-            label4.Visible = true;
-            dataGridView1.Visible = true;
-            dataGridView2.Visible = true;
+            achou = false;
+            pbMapa.Refresh();
+
+            dataGridView1.Rows.Clear();
+            dataGridView2.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView2.Columns.Clear();
+
+            if (lsbOrigem.SelectedIndex == lsbDestino.SelectedIndex)
+            {
+                label3.Visible = false;
+                label4.Visible = false;
+                dataGridView1.Visible = false;
+                dataGridView2.Visible = false;
+                label8.Visible = false;
+                label5.Visible = true;
+                return;
+            }
+
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
-            if (!BuscarCaminhos())
+            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, ref matrizCaminhos))
             {
-                var cu = Resultados;
+                label5.Visible = false;
+                label8.Visible = true;
+                label3.Visible = false;
+                label4.Visible = false;
+                dataGridView1.Visible = false;
+                dataGridView2.Visible = false;
+                achou = false;
             }
             else
             {
-                var cu = Resultados;
+                label5.Visible = false;
+                label8.Visible = false;
+                label3.Visible = true;
+                label4.Visible = true;
+                dataGridView1.Visible = true;
+                dataGridView2.Visible = true;
+                achou = true;
+                ExibirTodosOsCaminhosNoDGV();
+                ExibirMelhorCaminhoNoDGV();
+                pbMapa.Refresh();
             }
-
 
         }
 
@@ -184,7 +187,28 @@ namespace apCaminhosMarte
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
-            DesenharCidades(e.Graphics, "Poppins");
+            g = e.Graphics;
+
+            if (radioButton1.Checked)
+            {
+                DesenharCidades("Poppins");
+            }
+            else if (radioButton2.Checked)
+            {
+                DesenharLinhas();
+                DesenharCidades("Poppins");
+            }
+            else
+            {
+                DesenharLinhasComSetas();
+                DesenharCidades("Poppins");
+            }
+
+            if (achou)
+            {
+                DesenharMelhorCaminho();
+                DesenharCidades("Poppins");
+            }
         }
 
         private void FrmApp_Shown(object sender, EventArgs e)
@@ -200,6 +224,8 @@ namespace apCaminhosMarte
             panel7.Controls.Add(pb);
 
             panel7.Controls[panel7.Controls.IndexOf(panel8)].BringToFront();
+
+            radioButton3.PerformClick();
         }
 
         private void FrmApp_Resize(object sender, EventArgs e)
@@ -221,6 +247,21 @@ namespace apCaminhosMarte
 
         }
 
+        private void radioButton1_Click(object sender, EventArgs e)
+        {
+            pbMapa.Refresh();
+        }
+
+        private void radioButton2_Click(object sender, EventArgs e)
+        {
+            pbMapa.Refresh();
+        }
+
+        private void radioButton3_Click(object sender, EventArgs e)
+        {
+            pbMapa.Refresh();
+        }
+
         private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
         {
             int xf, yf;
@@ -231,6 +272,8 @@ namespace apCaminhosMarte
                 yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
                 if (primeiraVez)
                     yf = 80;
+                else
+                    comprimento -= 20;
                 g.DrawLine(caneta, x, y, xf, yf);
                 DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
                 incremento * 0.60, comprimento * 0.8, font, g);
@@ -243,17 +286,8 @@ namespace apCaminhosMarte
             }
         }
 
-        private void DesenharCidades(Graphics g, string font)
+        private void DesenharCidades(string font)
         {
-            for (int i = 0; i < ListaCaminhos.Count; i++)
-            {
-                Pen caneta = new Pen(Color.FromArgb(190, 184, 28, 28), 2);
-                caneta.DashStyle = DashStyle.Dash;
-                caneta.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
-                caneta.DashCap = DashCap.Round;
-                g.DrawLine(caneta, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
-            }
-
             for (int i = 0; i < Arvore.Qtd; i++)
             {
                 var cidade = new Cidade(i, default, default, default);
@@ -265,42 +299,107 @@ namespace apCaminhosMarte
             }
         }
 
-        private bool BuscarCaminhos()
+        private void DesenharLinhas()
         {
-            CaminhoEncontrado = new Stack<AvancoCaminho>();
-            Resultados = new List<Stack<AvancoCaminho>>();
-            passou = new bool[Arvore.Qtd];
-
-            BuscarCaminhosRec(origem);
-
-            if (Resultados.Count <= 0)
-                return false;
-
-            return true;
+            for (int i = 0; i < ListaCaminhos.Count; i++)
+            {
+                Pen c = new Pen(Color.DarkRed, 1);
+                c.DashStyle = DashStyle.Dash;
+                c.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
+                c.DashCap = DashCap.Round;
+                g.DrawLine(c, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
+            }
         }
 
-        private void BuscarCaminhosRec(Cidade atual)
+        private void DesenharLinhasComSetas()
         {
-            for (int j = 0; j < MatrizCaminhos.GetLength(1); j++)
+            for (int i = 0; i < ListaCaminhos.Count; i++)
             {
-                AvancoCaminho ac = MatrizCaminhos[atual.Id, j];
+                Pen c = new Pen(Color.Black, 1f);
+                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
+                c.CustomEndCap = bigArrow;
+                c.DashStyle = DashStyle.Dash;
+                c.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
+                c.DashCap = DashCap.Round;
+                g.DrawLine(c, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
+            }
+        }
 
-                if (ac != null && !passou[j])
+        private void ExibirTodosOsCaminhosNoDGV()
+        {
+            var listLength = new List<int>();
+
+            for (int i = 0; i < Resultados.Count; i++)
+            {
+                listLength.Add(Resultados[i].Length);
+            }
+
+            var maxLength = listLength.Max();
+
+            for (int i = 0; i < maxLength + 1; i++)
+            {
+                dataGridView1.Columns.Add(i + "", i + "");
+            }
+
+            for (int i = 0; i < Resultados.Count; i++)
+            {
+                dataGridView1.Rows.Add();
+                int k = Resultados[i].Length - 1;
+
+                for (int j = 0; j < Resultados[i].Length; j++)
                 {
-                    passou[atual.Id] = true;
-                    CaminhoEncontrado.Push(ac);
+                    dataGridView1.Rows[i].Cells[j].Value = Resultados[i][k].Origem.Nome + " ->";
 
-                    if (j == destino.Id)
-                    {
-                        Resultados.Add(CaminhoEncontrado);
-                        CaminhoEncontrado.Pop();
-                        passou[atual.Id] = false;
-                    }
-                    else
-                    {
-                        BuscarCaminhosRec(ac.Destino);
-                    }
+                    if (j == Resultados[i].Length - 1)
+                        dataGridView1.Rows[i].Cells[j + 1].Value = Resultados[i][k].Destino.Nome + "";
+
+                    k--;
                 }
+            }
+
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.Width = 127;
+            }
+        }
+
+        private void ExibirMelhorCaminhoNoDGV()
+        {
+            ListaMelhorCaminho = Solucionador.BuscarMelhorCaminho(Resultados);
+
+            for (int i = 0; i < ListaMelhorCaminho.Length + 1; i++)
+            {
+                dataGridView2.Columns.Add(i + "", i + "");
+            }
+
+            dataGridView2.Rows.Add();
+
+            int k = ListaMelhorCaminho.Length - 1;
+
+            for (int i = 0; i < ListaMelhorCaminho.Length; i++)
+            {
+                dataGridView2.Rows[0].Cells[i].Value = ListaMelhorCaminho[k].Origem.Nome + " ->";
+
+                if (i == ListaMelhorCaminho.Length - 1)
+                    dataGridView2.Rows[0].Cells[i + 1].Value = ListaMelhorCaminho[k].Destino.Nome + "";
+
+                k--;
+            }
+
+            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            {
+                column.Width = 127;
+            }
+        }
+
+        private void DesenharMelhorCaminho()
+        {
+            for (int i = 0; i < ListaMelhorCaminho.Length; i++)
+            {
+                Pen c = new Pen(Color.FromArgb(0, 0, 185), 2);
+                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
+                c.CustomEndCap = bigArrow;
+                g.DrawLine(c, (ListaMelhorCaminho[i].Origem.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Origem.Y * pbMapa.Height) / 2048, (ListaMelhorCaminho[i].Destino.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Destino.Y * pbMapa.Height) / 2048);
             }
         }
     }
