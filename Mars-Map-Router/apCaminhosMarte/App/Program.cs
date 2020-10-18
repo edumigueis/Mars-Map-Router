@@ -28,7 +28,7 @@ namespace apCaminhosMarte
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Algum erro inesperado aconteceu. Por favor, tente novamente!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

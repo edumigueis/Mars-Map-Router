@@ -11,22 +11,23 @@ namespace apCaminhosMarte
 
     public partial class FrmApp : Form
     {
-
+        private bool achou = false;
         private Graphics g;
         private Cidade origem;
         private Cidade destino;
-        private bool[] passou;
         private ArvoreBinaria<Cidade> arvore;
         private AvancoCaminho[,] matrizCaminhos;
         private List<AvancoCaminho> listaCaminhos;
         private List<AvancoCaminho[]> resultados;
         private Stack<AvancoCaminho> caminhoEncontrado;
+        private AvancoCaminho[] listaMelhorCaminho;
 
         internal ArvoreBinaria<Cidade> Arvore { get => arvore; set => arvore = value; }
         internal AvancoCaminho[,] MatrizCaminhos { get => matrizCaminhos; set => matrizCaminhos = value; }
         internal List<AvancoCaminho> ListaCaminhos { get => listaCaminhos; set => listaCaminhos = value; }
         internal List<AvancoCaminho[]> Resultados { get => resultados; set => resultados = value; }
         internal Stack<AvancoCaminho> CaminhoEncontrado { get => caminhoEncontrado; set => caminhoEncontrado = value; }
+        internal AvancoCaminho[] ListaMelhorCaminho { get => listaMelhorCaminho; set => listaMelhorCaminho = value; }
 
         private PictureBox pbAnterior = new PictureBox();
 
@@ -73,11 +74,13 @@ namespace apCaminhosMarte
 
             lsbDestino.DisplayMember = "Text";
             lsbOrigem.DisplayMember = "Text";
-
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
+            achou = false;
+            pbMapa.Refresh();
+
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
             dataGridView1.Columns.Clear();
@@ -97,7 +100,7 @@ namespace apCaminhosMarte
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
-            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, passou, ref matrizCaminhos))
+            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, ref matrizCaminhos))
             {
                 label5.Visible = false;
                 label8.Visible = true;
@@ -105,6 +108,7 @@ namespace apCaminhosMarte
                 label4.Visible = false;
                 dataGridView1.Visible = false;
                 dataGridView2.Visible = false;
+                achou = false;
             }
             else
             {
@@ -114,8 +118,10 @@ namespace apCaminhosMarte
                 label4.Visible = true;
                 dataGridView1.Visible = true;
                 dataGridView2.Visible = true;
+                achou = true;
                 ExibirTodosOsCaminhosNoDGV();
                 ExibirMelhorCaminhoNoDGV();
+                pbMapa.Refresh();
             }
 
         }
@@ -181,19 +187,27 @@ namespace apCaminhosMarte
 
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
+            g = e.Graphics;
+
             if (radioButton1.Checked)
             {
-                DesenharCidades(e.Graphics, "Poppins");
+                DesenharCidades("Poppins");
             }
             else if (radioButton2.Checked)
             {
-                DesenharLinhas(e.Graphics);
-                DesenharCidades(e.Graphics, "Poppins");
+                DesenharLinhas();
+                DesenharCidades("Poppins");
             }
             else
             {
-                DesenharLinhasComSetas(e.Graphics);
-                DesenharCidades(e.Graphics, "Poppins");
+                DesenharLinhasComSetas();
+                DesenharCidades("Poppins");
+            }
+
+            if (achou)
+            {
+                DesenharMelhorCaminho();
+                DesenharCidades("Poppins");
             }
         }
 
@@ -211,7 +225,7 @@ namespace apCaminhosMarte
 
             panel7.Controls[panel7.Controls.IndexOf(panel8)].BringToFront();
 
-            radioButton1.PerformClick();
+            radioButton3.PerformClick();
         }
 
         private void FrmApp_Resize(object sender, EventArgs e)
@@ -272,7 +286,7 @@ namespace apCaminhosMarte
             }
         }
 
-        private void DesenharCidades(Graphics g, string font)
+        private void DesenharCidades(string font)
         {
             for (int i = 0; i < Arvore.Qtd; i++)
             {
@@ -285,11 +299,11 @@ namespace apCaminhosMarte
             }
         }
 
-        private void DesenharLinhas(Graphics g)
+        private void DesenharLinhas()
         {
             for (int i = 0; i < ListaCaminhos.Count; i++)
             {
-                Pen c = new Pen(Color.DarkRed, 2);
+                Pen c = new Pen(Color.DarkRed, 1);
                 c.DashStyle = DashStyle.Dash;
                 c.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
                 c.DashCap = DashCap.Round;
@@ -297,7 +311,7 @@ namespace apCaminhosMarte
             }
         }
 
-        private void DesenharLinhasComSetas(Graphics g)
+        private void DesenharLinhasComSetas()
         {
             for (int i = 0; i < ListaCaminhos.Count; i++)
             {
@@ -305,7 +319,7 @@ namespace apCaminhosMarte
                 AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
                 c.CustomEndCap = bigArrow;
                 c.DashStyle = DashStyle.Dash;
-                c.DashPattern = new float[] { 8.0f, 8.0f, 8.0f, 8.0f };
+                c.DashPattern = new float[] { 4.0f, 4.0f, 4.0f, 4.0f };
                 c.DashCap = DashCap.Round;
                 g.DrawLine(c, (ListaCaminhos[i].Origem.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Origem.Y * pbMapa.Height) / 2048, (ListaCaminhos[i].Destino.X * pbMapa.Width) / 4096, (ListaCaminhos[i].Destino.Y * pbMapa.Height) / 2048);
             }
@@ -351,7 +365,42 @@ namespace apCaminhosMarte
 
         private void ExibirMelhorCaminhoNoDGV()
         {
+            ListaMelhorCaminho = Solucionador.BuscarMelhorCaminho(Resultados);
 
+            for (int i = 0; i < ListaMelhorCaminho.Length + 1; i++)
+            {
+                dataGridView2.Columns.Add(i + "", i + "");
+            }
+
+            dataGridView2.Rows.Add();
+
+            int k = ListaMelhorCaminho.Length - 1;
+
+            for (int i = 0; i < ListaMelhorCaminho.Length; i++)
+            {
+                dataGridView2.Rows[0].Cells[i].Value = ListaMelhorCaminho[k].Origem.Nome + " ->";
+
+                if (i == ListaMelhorCaminho.Length - 1)
+                    dataGridView2.Rows[0].Cells[i + 1].Value = ListaMelhorCaminho[k].Destino.Nome + "";
+
+                k--;
+            }
+
+            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            {
+                column.Width = 127;
+            }
+        }
+
+        private void DesenharMelhorCaminho()
+        {
+            for (int i = 0; i < ListaMelhorCaminho.Length; i++)
+            {
+                Pen c = new Pen(Color.Green, 2);
+                AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
+                c.CustomEndCap = bigArrow;
+                g.DrawLine(c, (ListaMelhorCaminho[i].Origem.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Origem.Y * pbMapa.Height) / 2048, (ListaMelhorCaminho[i].Destino.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Destino.Y * pbMapa.Height) / 2048);
+            }
         }
     }
 }

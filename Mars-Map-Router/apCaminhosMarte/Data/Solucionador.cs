@@ -5,11 +5,11 @@ namespace apCaminhosMarte.Data
 {
     static class Solucionador
     {
-        static public bool BuscarCaminhos(ref Stack<AvancoCaminho> caminhoEncontrado, ref List<AvancoCaminho[]> resultados, ArvoreBinaria<Cidade> arvore, Cidade origem, Cidade destino, bool[] passou, ref AvancoCaminho[,] matrizCaminhos)
+        static public bool BuscarCaminhos(ref Stack<AvancoCaminho> caminhoEncontrado, ref List<AvancoCaminho[]> resultados, ArvoreBinaria<Cidade> arvore, Cidade origem, Cidade destino, ref AvancoCaminho[,] matrizCaminhos)
         {
             caminhoEncontrado = new Stack<AvancoCaminho>();
             resultados = new List<AvancoCaminho[]>();
-            passou = new bool[arvore.Qtd];
+            var passou = new bool[arvore.Qtd];
 
             BuscarCaminhosRec(origem, ref destino, ref matrizCaminhos, ref caminhoEncontrado, ref resultados, ref passou);
 
@@ -51,6 +51,25 @@ namespace apCaminhosMarte.Data
                 caminhoEncontrado.Pop();
                 passou[atual.Id] = false;
             }
+        }
+
+        static public AvancoCaminho[] BuscarMelhorCaminho(List<AvancoCaminho[]> caminhos)
+        {
+            var distancias = new List<int>();
+
+            for (int i = 0; i < caminhos.Count; i++)
+            {
+                int distancia = 0;
+
+                for (int j = 0; j < caminhos[i].Length; j++)
+                {
+                    distancia += caminhos[i][j].Caminho.Distancia;                    
+                }
+
+                distancias.Add(distancia);
+            }
+
+            return caminhos[distancias.IndexOf(distancias.Min())];
         }
     }
 }
