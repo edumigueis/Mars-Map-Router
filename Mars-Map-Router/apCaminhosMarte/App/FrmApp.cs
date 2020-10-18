@@ -32,7 +32,7 @@ namespace apCaminhosMarte
 
         public FrmApp()
         {
-            InitializeComponent();        
+            InitializeComponent();
         }
 
         private void FrmApp_Load(object sender, EventArgs e)
@@ -97,7 +97,7 @@ namespace apCaminhosMarte
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
-            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, ref arvore, ref origem, ref destino, ref passou, ref matrizCaminhos))
+            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, passou, ref matrizCaminhos))
             {
                 label5.Visible = false;
                 label8.Visible = true;
@@ -114,7 +114,8 @@ namespace apCaminhosMarte
                 label4.Visible = true;
                 dataGridView1.Visible = true;
                 dataGridView2.Visible = true;
-                ExibirNoDGV();
+                ExibirTodosOsCaminhosNoDGV();
+                ExibirMelhorCaminhoNoDGV();
             }
 
         }
@@ -310,11 +311,11 @@ namespace apCaminhosMarte
             }
         }
 
-        private void ExibirNoDGV()
+        private void ExibirTodosOsCaminhosNoDGV()
         {
             var listLength = new List<int>();
 
-            for(int i = 0; i < Resultados.Count; i++)
+            for (int i = 0; i < Resultados.Count; i++)
             {
                 listLength.Add(Resultados[i].Length);
             }
@@ -335,7 +336,7 @@ namespace apCaminhosMarte
                 {
                     dataGridView1.Rows[i].Cells[j].Value = Resultados[i][k].Origem.Nome + " ->";
 
-                    if(j == Resultados[i].Length - 1)
+                    if (j == Resultados[i].Length - 1)
                         dataGridView1.Rows[i].Cells[j + 1].Value = Resultados[i][k].Destino.Nome + "";
 
                     k--;
@@ -344,9 +345,13 @@ namespace apCaminhosMarte
 
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
-                column.Width = 130;
+                column.Width = 127;
             }
         }
 
+        private void ExibirMelhorCaminhoNoDGV()
+        {
+
+        }
     }
 }
