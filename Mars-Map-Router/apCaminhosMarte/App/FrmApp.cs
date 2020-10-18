@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace apCaminhosMarte
@@ -41,6 +42,12 @@ namespace apCaminhosMarte
             lsbOrigem.BackColor = Color.FromArgb(255, 60, 80, 185);
             btnBuscar.BackColor = Color.FromArgb(255, 60, 80, 185);
 
+            label5.Visible = false;
+            label8.Visible = false;
+
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView2.RowHeadersVisible = false;
+
             var leitor = new LeitorDeArquivoMarsMap();
 
             Arvore = leitor.LerCidades();
@@ -67,29 +74,32 @@ namespace apCaminhosMarte
             lsbDestino.DisplayMember = "Text";
             lsbOrigem.DisplayMember = "Text";
 
-            label5.Visible = false;
-            label8.Visible = false;
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            label5.Visible = false;
-            label8.Visible = false;
+            dataGridView1.Rows.Clear();
+            dataGridView2.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView2.Columns.Clear();
 
             if (lsbOrigem.SelectedIndex == lsbDestino.SelectedIndex)
             {
+                label3.Visible = false;
+                label4.Visible = false;
+                dataGridView1.Visible = false;
+                dataGridView2.Visible = false;
+                label8.Visible = false;
                 label5.Visible = true;
                 return;
             }
-            label3.Visible = true;
-            label4.Visible = true;
-            dataGridView1.Visible = true;
-            dataGridView2.Visible = true;
+
             origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
             destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
 
             if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, ref arvore, ref origem, ref destino, ref passou, ref matrizCaminhos))
             {
+                label5.Visible = false;
                 label8.Visible = true;
                 label3.Visible = false;
                 label4.Visible = false;
@@ -98,6 +108,12 @@ namespace apCaminhosMarte
             }
             else
             {
+                label5.Visible = false;
+                label8.Visible = false;
+                label3.Visible = true;
+                label4.Visible = true;
+                dataGridView1.Visible = true;
+                dataGridView2.Visible = true;
                 ExibirNoDGV();
             }
 
@@ -296,44 +312,39 @@ namespace apCaminhosMarte
 
         private void ExibirNoDGV()
         {
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView2.RowHeadersVisible = false;
-            dataGridView2.Columns.Add("a", "a");
-            dataGridView2.Columns.Add("b", "b");
-            dataGridView2.Columns.Add("c", "c");
-            dataGridView2.Columns.Add("d", "d");
-            dataGridView2.Rows.Add();
-            dataGridView2.Rows[0].Cells[0].Value = "Tharsis  ->";
-            dataGridView2.Rows[0].Cells[1].Value = "Portholee  ->";
-            dataGridView2.Rows[0].Cells[2].Value = "Redsea  ->";
-            dataGridView2.Rows[0].Cells[3].Value = "Bothadge";
-            foreach (DataGridViewColumn column in dataGridView2.Columns)
+            var listLength = new List<int>();
+
+            for(int i = 0; i < Resultados.Count; i++)
             {
-                column.Width = 120;
+                listLength.Add(Resultados[i].Length);
             }
 
-            dataGridView1.Columns.Add("a", "a");
-            dataGridView1.Columns.Add("b", "b");
-            dataGridView1.Columns.Add("c", "c");
-            dataGridView1.Columns.Add("d", "d");
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[0].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[0].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[0].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[0].Cells[3].Value = "Bothadge";
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[1].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[1].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[1].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[1].Cells[3].Value = "Bothadge";
-            dataGridView1.Rows.Add();
-            dataGridView1.Rows[2].Cells[0].Value = "Tharsis  ->";
-            dataGridView1.Rows[2].Cells[1].Value = "Portholee  ->";
-            dataGridView1.Rows[2].Cells[2].Value = "Redsea  ->";
-            dataGridView1.Rows[2].Cells[3].Value = "Bothadge";
+            var maxLength = listLength.Max();
+
+            for (int i = 0; i < maxLength + 1; i++)
+            {
+                dataGridView1.Columns.Add(i + "", i + "");
+            }
+
+            for (int i = 0; i < Resultados.Count; i++)
+            {
+                dataGridView1.Rows.Add();
+                int k = Resultados[i].Length - 1;
+
+                for (int j = 0; j < Resultados[i].Length; j++)
+                {
+                    dataGridView1.Rows[i].Cells[j].Value = Resultados[i][k].Origem.Nome + " ->";
+
+                    if(j == Resultados[i].Length - 1)
+                        dataGridView1.Rows[i].Cells[j + 1].Value = Resultados[i][k].Destino.Nome + "";
+
+                    k--;
+                }
+            }
+
             foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
-                column.Width = 120;
+                column.Width = 130;
             }
         }
 
