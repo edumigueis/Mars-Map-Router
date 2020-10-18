@@ -396,7 +396,7 @@ namespace apCaminhosMarte
         {
             for (int i = 0; i < ListaMelhorCaminho.Length; i++)
             {
-                Pen c = new Pen(Color.Green, 2);
+                Pen c = new Pen(Color.FromArgb(0, 0, 185), 2);
                 AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 8);
                 c.CustomEndCap = bigArrow;
                 g.DrawLine(c, (ListaMelhorCaminho[i].Origem.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Origem.Y * pbMapa.Height) / 2048, (ListaMelhorCaminho[i].Destino.X * pbMapa.Width) / 4096, (ListaMelhorCaminho[i].Destino.Y * pbMapa.Height) / 2048);
