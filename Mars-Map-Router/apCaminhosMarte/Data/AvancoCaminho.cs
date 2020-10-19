@@ -14,6 +14,13 @@ namespace apCaminhosMarte.Data
         public Cidade Destino { get; set; }
         public CaminhoEntreCidades Caminho { get; set; }
 
+        /// <summary>
+        /// Cria uma instância da classe.
+        /// </summary>
+        /// <param name="origem">Objeto de Cidade que representa uma origem.</param>
+        /// <param name="destino">Objeto de Cidade que representa um destino.</param>
+        /// <param name="caminho">Objeto de CaminhoEntreCidades que representa 
+        /// um caminho entre a origem e o destino expecificados.</param>
         public AvancoCaminho(Cidade origem, Cidade destino, CaminhoEntreCidades caminho)
         {
             this.Origem = origem;

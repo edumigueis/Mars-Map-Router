@@ -12,6 +12,9 @@ namespace apCaminhosMarte
         [STAThread]
         static void Main()
         {
+            //Este try catch tem por objetivo receber excessões inesperadas causadas pelo programa,
+            //como por exemplo uma falta de memória, um problema com os arquivos e etc. A ideia é 
+            //que o usuário não receba um erro enorme em sua tela.
             try
             {
                 if (Environment.OSVersion.Version.Major >= 6)

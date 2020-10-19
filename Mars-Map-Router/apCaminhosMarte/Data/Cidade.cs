@@ -12,6 +12,13 @@ namespace apCaminhosMarte.Data
         public int X { get; set; } //Posição X da cidade dentre os 4096px da imagem original.
         public int Y { get; set; } //Posição Y da cidade dentre os 2048px da imagem original.
 
+        /// <summary>
+        /// Constrói uma instância de Cidade.
+        /// </summary>
+        /// <param name="id">O id da cidade (int)</param>
+        /// <param name="nome">O nome da cidade</param>
+        /// <param name="x">A coordenada X da cidade (int)</param>
+        /// <param name="y">A coordenada Y da cidade (int)</param>
         public Cidade(int id, string nome, int x, int y)
         {
             this.Id = id;
