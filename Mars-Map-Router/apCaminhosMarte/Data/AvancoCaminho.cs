@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace apCaminhosMarte.Data
 {
+    /// <summary>
+    /// Representa uma união entre um caminho e seus extremos, portanto, dois objetos de Cidade e um objeto de Caminho.
+    /// </summary>
     class AvancoCaminho : ICloneable
     {
         public Cidade Origem { get; set; }
