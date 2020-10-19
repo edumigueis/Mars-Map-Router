@@ -34,6 +34,15 @@ namespace apCaminhosMarte.Data
             return true;
         }
 
+        /// <summary>
+        /// Método recursivo para busca de caminhos. Esse método efetua a real busca de caminhos na classe.
+        /// </summary>
+        /// <param name="atual">Cidade sendo percorrida naquela iteração do método.</param>
+        /// <param name="destino">Cidade objetivo como destino.</param>
+        /// <param name="matrizCaminhos">Matriz esparssa que relaciona caminhos e cidades.</param>
+        /// <param name="caminhoEncontrado">Stack que contém a sucessão de AvancosCaminhos para chegar ao destino final.</param>
+        /// <param name="resultados">Conjunto de stacks que possuem todas as relções de caminhos do origem inicial a destino final.</param>
+        /// <param name="passou">Vetor boolean que especifica se a iteração do método passou por uma cidade específica (relativo ao id).</param>
         static private void BuscarCaminhosRec(Cidade atual, ref Cidade destino, ref AvancoCaminho[,] matrizCaminhos, ref Stack<AvancoCaminho> caminhoEncontrado, ref List<AvancoCaminho[]> resultados, ref bool[] passou)
         {
             for (int j = 0; j < matrizCaminhos.GetLength(1); j++)

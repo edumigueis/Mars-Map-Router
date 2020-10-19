@@ -38,6 +38,9 @@ namespace apCaminhosMarte
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Inicializa o formulário com a interface inicial e padrão.
+        /// </summary>
         private void FrmApp_Load(object sender, EventArgs e)
         {
             panel2.BackColor = Color.FromArgb(255, 60, 80, 185);
@@ -78,6 +81,9 @@ namespace apCaminhosMarte
             lsbOrigem.DisplayMember = "Text";
         }
 
+        /// <summary>
+        /// Lida com o click do botão de buscar.
+        /// </summary>
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             achou = false;
@@ -86,7 +92,7 @@ namespace apCaminhosMarte
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
             dataGridView1.Columns.Clear();
-            dataGridView2.Columns.Clear();
+            dataGridView2.Columns.Clear(); //limpa dgvs
 
             if (lsbOrigem.SelectedIndex == lsbDestino.SelectedIndex)
             {
@@ -99,11 +105,12 @@ namespace apCaminhosMarte
                 return;
             }
 
-            origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default));
-            destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default));
+            origem = Arvore.Busca(new Cidade((lsbOrigem.SelectedItem as LsbItems).Id, default, default, default)); // descobre origem
+            destino = Arvore.Busca(new Cidade((lsbDestino.SelectedItem as LsbItems).Id, default, default, default)); //descobre destino
 
-            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, ref matrizCaminhos))
-            {
+            if (!Solucionador.BuscarCaminhos(ref caminhoEncontrado, ref resultados, arvore, origem, destino, ref matrizCaminhos)) // chama o método de solução de caminhos
+            { 
+                //não achou caminhos
                 label5.Visible = false;
                 label8.Visible = true;
                 label3.Visible = false;
@@ -114,6 +121,7 @@ namespace apCaminhosMarte
             }
             else
             {
+                //achou caminhos
                 label5.Visible = false;
                 label8.Visible = false;
                 label3.Visible = true;
@@ -127,7 +135,7 @@ namespace apCaminhosMarte
             }
 
         }
-
+        //Ambos os event handlers abaixo para DrawItem são para personalização da cor de seleção das ListBoxes.
         private void lsbOrigem_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (lsbOrigem.Items.Count == 0)
@@ -187,6 +195,9 @@ namespace apCaminhosMarte
             e.DrawFocusRectangle();
         }
 
+        /// <summary>
+        /// Este event handler verifica qual radioButton está checado para determinar a exibição das linhas entre cidades.
+        /// </summary>
         private void pbMapa_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;
@@ -212,7 +223,7 @@ namespace apCaminhosMarte
                 DesenharCidades("Poppins");
             }
         }
-
+        //Inicialização do form
         private void FrmApp_Shown(object sender, EventArgs e)
         {
             var pb = new PictureBox();
@@ -230,6 +241,11 @@ namespace apCaminhosMarte
             radioButton3.PerformClick();
         }
 
+        /// <summary>
+        /// Método que permite que, após redimensionamento, seja possível dar scroll na árvore de cidades.
+        /// </summary>
+        /// <param name="sender">Auto object sender for event</param>
+        /// <param name="e">Auto event argument</param>
         private void FrmApp_Resize(object sender, EventArgs e)
         {
             if (Arvore == null)
@@ -264,6 +280,9 @@ namespace apCaminhosMarte
             pbMapa.Refresh();
         }
 
+        /// <summary>
+        /// Método que desenha a árvore de cidades na tela.
+        /// </summary>
         private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
         {
             int xf, yf;
@@ -288,6 +307,12 @@ namespace apCaminhosMarte
             }
         }
 
+        /// <summary>
+        /// Desenha as cidades no mapa de acordo com sua coordenada. 
+        /// Usa-se uma regra de 3 para definir a nova coordenada 
+        /// baseada na width e height da tela.
+        /// </summary>
+        /// <param name="font">Fonte a ser usada.</param>
         private void DesenharCidades(string font)
         {
             for (int i = 0; i < Arvore.Qtd; i++)
@@ -327,6 +352,9 @@ namespace apCaminhosMarte
             }
         }
 
+        /// <summary>
+        /// Exibe todos os caminhos encontrados e armazenados na List resultados nos DataGridViews do form.
+        /// </summary>
         private void ExibirTodosOsCaminhosNoDGV()
         {
             var listLength = new List<int>();
@@ -365,6 +393,9 @@ namespace apCaminhosMarte
             }
         }
 
+        /// <summary>
+        /// Acessa o melhor caminho e o exibe no DataGridView.
+        /// </summary>
         private void ExibirMelhorCaminhoNoDGV()
         {
             ListaMelhorCaminho = Solucionador.BuscarMelhorCaminho(Resultados);
@@ -394,6 +425,9 @@ namespace apCaminhosMarte
             }
         }
 
+        /// <summary>
+        /// Desenha o melhor caminho na tela usando uma Pen e os mesmos GrA
+        /// </summary>
         private void DesenharMelhorCaminho()
         {
             for (int i = 0; i < ListaMelhorCaminho.Length; i++)
