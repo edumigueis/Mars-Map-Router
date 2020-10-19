@@ -9,8 +9,8 @@ namespace apCaminhosMarte.Data
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; set; } //Posição X da cidade dentre os 4096px da imagem original.
+        public int Y { get; set; } //Posição Y da cidade dentre os 2048px da imagem original.
 
         public Cidade(int id, string nome, int x, int y)
         {
@@ -20,7 +20,7 @@ namespace apCaminhosMarte.Data
             this.Y = y;
         }
 
-        public int CompareTo(Cidade other)
+        public int CompareTo(Cidade other) //Cidades podem ser comparadas a partir do id
         {
             return this.Id.CompareTo(other.Id);
         }

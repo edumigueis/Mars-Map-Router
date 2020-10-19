@@ -11,13 +11,17 @@ namespace apCaminhosMarte.Data
     {
         private int qtdLinhas = 0;
 
-        ArvoreBinaria<Cidade> Arvore { get; set; }
+        ArvoreBinaria<Cidade> Arvore { get; set; } //árvore para armazenar os dados lidos
 
         public LeitorDeArquivoMarsMap()
         {
             Arvore = new ArvoreBinaria<Cidade>();
         }
 
+        /// <summary>
+        /// Guarda os dados do arquivo de cidades em uma árvore binária
+        /// </summary>
+        /// <returns>Uma ArvoreBinaria<Cidade> contendo todas as cidades ordenadas.</returns>
         public ArvoreBinaria<Cidade> LerCidades()
         {
             StreamReader sr = new StreamReader("../../txt/CidadesDes.txt", Encoding.UTF7);
@@ -36,6 +40,10 @@ namespace apCaminhosMarte.Data
             return Arvore;
         }
 
+        /// <summary>
+        /// Cria uma lista de caminhos disponíveis, com origem, destino e dados de percurso.
+        /// </summary>
+        /// <returns>Retorna uma lista de AvancoCaminhos contendo dados de caminhos entre cidades.</returns>
         public List<AvancoCaminho> LerCaminhos()
         {
             StreamReader sr = new StreamReader("../../txt/Caminhos.txt", Encoding.UTF7);
@@ -55,6 +63,10 @@ namespace apCaminhosMarte.Data
             return lista;
         }
 
+        /// <summary>
+        /// Le o arquivo em uma matriz exparsa que relaciona as origens com o destino.
+        /// </summary>
+        /// <returns>Retorna uma matriz exparsa com os caminhos indexados de suas origens e destinos.</returns>
         public AvancoCaminho[,] LerCaminhosComoMatriz()
         {
             StreamReader sr = new StreamReader("../../txt/Caminhos.txt", Encoding.UTF7);
