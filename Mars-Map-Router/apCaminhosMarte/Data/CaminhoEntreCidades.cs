@@ -1,4 +1,6 @@
-﻿namespace apCaminhosMarte.Data
+﻿//Eduardo Migueis - 19167 e Rodrigo Smith - 19197
+
+namespace apCaminhosMarte.Data
 {
     class CaminhoEntreCidades
     {
