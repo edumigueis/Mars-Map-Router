@@ -5,8 +5,21 @@ using System.Linq;
 
 namespace apCaminhosMarte.Data
 {
+    /// <summary>
+    /// Classe estática para encontrar caminhos entre cidades.
+    /// </summary>
     static class Solucionador
     {
+        /// <summary>
+        /// Busca todos os caminhos entre duas cidades.
+        /// </summary>
+        /// <param name="caminhoEncontrado">Stack vazia para armazenamento de caminho</param>
+        /// <param name="resultados">List<AvancoCaminho[]> vazia para receber os resultados</param>
+        /// <param name="arvore">ArvoreBinaria de cidades.</param>
+        /// <param name="origem">Objeto de Cidade que representa a origem</param>
+        /// <param name="destino">Objeto de Cidade que representa o destino final</param>
+        /// <param name="matrizCaminhos">Matriz esparssa de caminhos.</param>
+        /// <returns></returns>
         static public bool BuscarCaminhos(ref Stack<AvancoCaminho> caminhoEncontrado, ref List<AvancoCaminho[]> resultados, ArvoreBinaria<Cidade> arvore, Cidade origem, Cidade destino, ref AvancoCaminho[,] matrizCaminhos)
         {
             caminhoEncontrado = new Stack<AvancoCaminho>();
@@ -55,6 +68,11 @@ namespace apCaminhosMarte.Data
             }
         }
 
+        /// <summary>
+        /// Busca o melhor caminhos dentre os vetores de AvancoCaminho guardados numa List.
+        /// </summary>
+        /// <param name="caminhos">List<AvancoCaminho[]> com todos os caminhos entre duas cidades.</param>
+        /// <returns>Retorna um vetor de AvancoCaminho contendo  melhor caminho(menor distância) entre duas cidades.</returns>
         static public AvancoCaminho[] BuscarMelhorCaminho(List<AvancoCaminho[]> caminhos)
         {
             var distancias = new List<int>();
