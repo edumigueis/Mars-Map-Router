@@ -281,7 +281,7 @@ namespace apCaminhosMarte
         }
 
         /// <summary>
-        /// Método que desenha a árvore de cidades na tela.
+        /// Método recursivo que desenha a árvore de cidades na tela.
         /// </summary>
         private void DesenharArvore(bool primeiraVez, NoArvore<Cidade> raiz, int x, int y, double angulo, double incremento, double comprimento, string font, Graphics g)
         {
