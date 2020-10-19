@@ -19,7 +19,7 @@ namespace apCaminhosMarte.Data
         /// <param name="origem">Objeto de Cidade que representa a origem</param>
         /// <param name="destino">Objeto de Cidade que representa o destino final</param>
         /// <param name="matrizCaminhos">Matriz esparssa de caminhos.</param>
-        /// <returns></returns>
+        /// <returns>Retorna true se existe caminho e false se não existe</returns>
         static public bool BuscarCaminhos(ref Stack<AvancoCaminho> caminhoEncontrado, ref List<AvancoCaminho[]> resultados, ArvoreBinaria<Cidade> arvore, Cidade origem, Cidade destino, ref AvancoCaminho[,] matrizCaminhos)
         {
             caminhoEncontrado = new Stack<AvancoCaminho>();
