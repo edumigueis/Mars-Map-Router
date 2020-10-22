@@ -17,7 +17,9 @@ This project uses really interesting algorithms like backtracking and recursion 
 
 ## Meta
 
-Copyright (c) Eduardo Migueis 2020.
+Copyright (c) Eduardo Migueis and Rodrigo Smith 2020.
+
+Developed by Eduardo Migueis and Rodrigo Smith.
 
 Distributed under the GNU GENERAL PUBLIC LICENSE V3 license. See ``LICENSE`` for more information.
 
