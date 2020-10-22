@@ -19,8 +19,6 @@ This project uses really interesting algorithms like backtracking and recursion 
 
 Copyright (c) Eduardo Migueis and Rodrigo Smith 2020.
 
-Developed by Eduardo Migueis and Rodrigo Smith.
-
 Distributed under the GNU GENERAL PUBLIC LICENSE V3 license. See ``LICENSE`` for more information.
 
 [https://github.com/edumigueis/Mars-Map-Router](https://github.com/edumigueis)
